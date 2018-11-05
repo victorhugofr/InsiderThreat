@@ -13,10 +13,8 @@ public class Main {
 			while(leitor.hasNext()){
 				linha = leitor.nextLine();
 				arquivo.setValoresEntreVirgulas(linha);
-					 teste=leitor.quebrarLinha();
-					 System.out.println(Arrays.toString(teste));
-				
-				
+				teste=leitor.quebrarLinha();
+				System.out.println(Arrays.toString(teste));		
 			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
