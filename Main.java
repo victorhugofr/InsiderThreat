@@ -4,15 +4,15 @@ import java.util.Scanner;
 
 public class Main {
 	public static void main(String[] args) {
-		Leitor leitor = new Leitor();
+		Leitor arquivo = new Leitor();
 		String[] teste;
 		try {
-			Scanner leitor = new Scanner(leitor.leitura("src/device.csv"));
+			Scanner leitor = new Scanner(arquivo.leitura("src/device.csv"));
 			String linha = new String();
 			leitor.nextLine();
 			while(leitor.hasNext()){
 				linha = leitor.nextLine();
-				leitor.setValoresEntreVirgulas(linha);
+				arquivo.setValoresEntreVirgulas(linha);
 					 teste=leitor.quebrarLinha();
 					 System.out.println(Arrays.toString(teste));
 				
