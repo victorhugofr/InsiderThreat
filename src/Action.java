@@ -1,3 +1,5 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Action {
@@ -6,13 +8,21 @@ public class Action {
 	private String user;
 	private String pc;
 	private String activity;
-	
-	public Action(String id, Date date, String user, String pc, String activity) {
+	protected SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+	public Action() {
+		
+	}
+	public Action(String id, String date, String user, String pc, String activity) {
 		this.id = id;
-		this.date = date;
+//		this.date = date;
 		this.user = user;
 		this.pc = pc;
 		this.activity = activity;
+		try {
+			this.date = format.parse(date.substring(0,10));
+		} catch (ParseException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	public String getId() {
@@ -21,6 +31,10 @@ public class Action {
 	
 	public Date getDate() {
 		return date;
+	}
+	
+	public String getDateString() {
+		return date.toString();
 	}
 	
 	public String getUser() {
