@@ -76,8 +76,8 @@ public class DataBase {
 	}
 	
 	public void print() {
-		Node aux,aux2,aux3;
-		int i,j,z;
+		Node aux,aux2,aux3,aux4;
+		int i,j,z,h;
 		for(i=0;i<users.size();i++) {
 			aux=users.get(i).getRoot();
 			System.out.println(aux.getValue());
@@ -87,6 +87,10 @@ public class DataBase {
 				for(j=0;j<aux2.getChilds().size();j++) {
 					aux3=aux2.getChildAt(j);
 					System.out.println(aux3.getValue());
+					for(h=0;h<aux3.getChilds().size();h++){
+						aux4=aux3.getChildAt(h);
+						System.out.println(aux4.getValue());
+					}
 				}
 			}
 		}
