@@ -6,34 +6,79 @@ public class DataBase {
 	public DataBase() {
 		users=new ArrayList<Tree>();
 	}
-	
+	public int[] getHistMed() {
+		int histmedio[]=new int[24];
+		int aux[]=new int[24];
+		for(int i=0;i<users.size();i++) {
+			for(int j=0;j<24;j++) {
+			//	System.out.print(users.get(i).getRoot().getHist()[j]+" ");
+				aux[j]+=users.get(i).getRoot().getHist()[j];
+			}
+			//System.out.println();
+		}
+		for (int i=0;i<24;i++) {
+			histmedio[i]=aux[i]/users.size();
+		}
+		return histmedio;
+	}
+/**	public double[] getHistNormal() {
+		double dp[]=new double[users.size()];
+		for(int i=0;i<users.size();i++) {
+			for(int j=0;j<24;j++) {
+				dp[j]=(users.get(i).getRoot().getHist()[j]-getHistMed()[j])/getHistDp()[j];
+			}
+		}
+		return dp;
+	}*/
+	public double[] getHistDp() {
+		double dp[]=new double[24];
+		double aux[]=new double[24];
+		for(int i=0;i<users.size();i++) {
+			for(int j=0;j<24;j++) {
+			//	System.out.print(users.get(i).getRoot().getHist()[j]+" ");
+				aux[j]+=Math.pow(users.get(i).getRoot().getHist()[j]-getHistMed()[j],2);
+			}
+			//System.out.println();
+		}
+		for (int i=0;i<24;i++) {
+			dp[i]=Math.sqrt(aux[i]/users.size());
+		}
+		return dp;
+	}
 	public void verifica(Action teste) { // VERIFICA SE JA EXISTE UMA ÁRVORE COM AQUELE USER
+		
 		Node aux;
+		int histaux2[]=new int[24];
 		boolean existe= false;
 		for(int i=0;i<users.size();i++) {
 			aux=users.get(i).search(users.get(i).getRoot(),teste.getUser()); 
 			if(aux!=null) {//procura usuario
+				histaux2=aux.getHist();
+				histaux2[Integer.parseInt(teste.getHour())]++;
 				existe=true;
-				aux.getHist()[Integer.parseInt(teste.getDateString().substring(11, 13))]++;
+				aux.setHist(histaux2);
 				users.get(i).refresh(teste);
 			}
 		}
 		
 		if(existe==false) {// CASO NAO EXISTA, CRIE E ADICIONE SUAS RAIZES
+			int histaux[]=new int[24];
 			Node id= new Node(teste.getUser());
 			Node data=new Node(teste.getDateString());
 			Node PC= new Node(teste.getPc());
 			Node activity=new Node(teste.getActivity());
 			
-			activity.getHist()[Integer.parseInt(teste.getDateString().substring(11, 13))]++;
 			
-			PC.getHist()[Integer.parseInt(teste.getDateString().substring(11, 13))]++;
+			histaux[Integer.parseInt(teste.getHour())]++;
+			activity.setHist(histaux);
+			
+			PC.setHist(histaux);
 			PC.getChilds().add(activity);
 			
-			data.getHist()[Integer.parseInt(teste.getDateString().substring(11, 13))]++;		
+			data.setHist(histaux);		
 			data.getChilds().add(PC);
 			
-			id.getHist()[Integer.parseInt(teste.getDateString().substring(11, 13))]++;
+			id.setHist(histaux);
 			id.getChilds().add(data);
 			
 			Tree user = new Tree();

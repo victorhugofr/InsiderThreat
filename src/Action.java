@@ -1,6 +1,7 @@
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.text.DateFormat;
 
 public class Action {
 	private String id;
@@ -8,6 +9,7 @@ public class Action {
 	private String user;
 	private String pc;
 	private String activity;
+	DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 	protected SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 	public Action() {
 		
@@ -19,7 +21,8 @@ public class Action {
 		this.pc = pc;
 		this.activity = activity;
 		try {
-			this.date = format.parse(date.substring(0,10));
+			this.date = df.parse(date.substring(0,10) +" "+ date.substring(11, 19));
+		System.out.println(date);
 		} catch (ParseException e) {
 			System.out.println(e.getMessage());
 		}
@@ -34,7 +37,10 @@ public class Action {
 	}
 	
 	public String getDateString() {
-		return date.toString();
+		return df.format(date);
+	}
+	public String getHour() {
+		return df.format(date).substring(11, 13);
 	}
 	
 	public String getUser() {

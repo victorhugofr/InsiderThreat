@@ -3,14 +3,47 @@ import java.util.Scanner;
 
 public class Main {
 
+	private static double dfinal[];
+	private static double media=0;
+	private static double dp=0;
+	private static double normal[];
+
 	public static void main(String[] args) {
 		DataBase db=new DataBase();
 			Device de = new Device();
 			ler("src/device2.csv",db,de);
 			Logon de2 = new Logon();
 			ler("src/logon2.csv",db,de2);
-		db.print();
-	}
+		//	histnormal=db.getHistNormal();
+			dfinal = new double[db.users.size()];
+				for(int j=0;j<db.users.size();j++) {
+					for(int i=0;i<24;i++) {
+						dfinal[j]+=Math.pow(db.users.get(j).getRoot().getHist()[i]-db.getHistMed()[i], 2);
+					}
+					dfinal[j]=Math.sqrt(dfinal[j]);
+					//System.out.print(dfinal[j] + " ");
+				}
+			for(int i=0;i<db.users.size();i++) {
+				media+=dfinal[i];
+			}
+			media=media/db.users.size();
+			for(int i=0;i<db.users.size();i++) {
+				dp+=Math.pow(dfinal[i]-media,2);
+			}
+			dp=Math.sqrt(dp/db.users.size());
+			normal = new double[db.users.size()];
+			for(int i=0;i<db.users.size();i++) {
+				normal[i]=(dfinal[i]-media)/dp;
+				System.out.print(Math.abs(normal[i])+" ");
+			}
+			
+			
+			
+		
+	    }
+	
+			
+	
 
 	private static void ler(String nomearquivo,DataBase db,Action de) {
 		Scanner leitor;

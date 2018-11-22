@@ -22,38 +22,51 @@ public class Tree {
 	    }
 	 
 	 public void refresh(Action teste) {// VERIFICA SE JA EXISTE AS FOLHAS(DATA,PC,ATIVIDADE)
+		 int histaux2[]=new int[24];
+		 int histaux[]=new int[24];
 		 Node aux2,aux,aux3,aux4;
 		 aux=search(getRoot(),teste.getUser());
 		 aux2=search(aux,teste.getDateString()); 
 			if(aux2!=null) {//procura data
-				aux.getHist()[Integer.parseInt(teste.getDateString().substring(11, 13))]++;
+				histaux2=aux2.getHist();
+				histaux2[Integer.parseInt(teste.getHour())]++;
+				aux2.setHist(histaux2);
 				aux3=search(aux,teste.getPc());
 				if(aux3!=null) {//procura PC
-					aux3.getHist()[Integer.parseInt(teste.getDateString().substring(11, 13))]++;
+					histaux2=aux3.getHist();
+					histaux2[Integer.parseInt(teste.getHour())]++;
+					aux3.setHist(histaux2);
 					aux4=search(aux,teste.getActivity());
 					if(aux4!=null) {//procura atividade
-						aux4.getHist()[Integer.parseInt(teste.getDateString().substring(11, 13))]++;
+						histaux2=aux4.getHist();
+						histaux2[Integer.parseInt(teste.getHour())]++;
+						aux4.setHist(histaux2);
 					}else {
 						Node activity=new Node(teste.getActivity());
-						activity.getHist()[Integer.parseInt(teste.getDateString().substring(11, 13))]++;
+						histaux[Integer.parseInt(teste.getHour())]++;
+						activity.setHist(histaux);
 						aux2.getChilds().add(activity);
 					}
 				}else {
+					histaux[Integer.parseInt(teste.getHour())]++;
 					Node PC= new Node(teste.getPc());
 					Node activity=new Node(teste.getActivity());
+					activity.setHist(histaux);
 					PC.getChilds().add(activity);
-					PC.getHist()[Integer.parseInt(teste.getDateString().substring(11, 13))]++;
+					PC.setHist(histaux);
 					aux.getChilds().add(PC);
 				}
 			}else {
+				histaux[Integer.parseInt(teste.getHour())]++;
 				Node data=new Node(teste.getDateString());
 				Node PC= new Node(teste.getPc());
 				Node activity=new Node(teste.getActivity());
 				PC.getChilds().add(activity);
 				data.getChilds().add(PC);
 				
-				data.getHist()[Integer.parseInt(teste.getDateString().substring(11, 13))]++;
-				PC.getHist()[Integer.parseInt(teste.getDateString().substring(11, 13))]++;
+				data.setHist(histaux);
+				PC.setHist(histaux);
+				activity.setHist(histaux);
 				aux.getChilds().add(data);
 			}
 		}
