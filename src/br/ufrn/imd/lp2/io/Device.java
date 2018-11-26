@@ -1,4 +1,4 @@
-
+package br.ufrn.imd.lp2.io;
 public class Device extends Action {
 
 	public Device() {

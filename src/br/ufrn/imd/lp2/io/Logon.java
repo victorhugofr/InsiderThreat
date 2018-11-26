@@ -1,5 +1,4 @@
-
-
+package br.ufrn.imd.lp2.io;
 public class Logon extends Action {
 	
 	public Logon() {

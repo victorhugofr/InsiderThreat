@@ -1,3 +1,4 @@
+package br.ufrn.imd.lp2.io;
 
 public class Tree {
 	private Node root;

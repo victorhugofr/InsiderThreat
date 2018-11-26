@@ -1,5 +1,8 @@
+package br.ufrn.imd.lp2.io;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+
+import br.ufrn.imd.lp2.domain.DataBase;
 
 public class Main {
 
@@ -11,9 +14,9 @@ public class Main {
 	public static void main(String[] args) {
 		DataBase db=new DataBase();
 			Device de = new Device();
-			ler("src/device2.csv",db,de);
+			ler("src/br/ufrn/imd/lp2/files/device2.csv",db,de);
 			Logon de2 = new Logon();
-			ler("src/logon2.csv",db,de2);
+			ler("src/br/ufrn/imd/lp2/files/logon2.csv",db,de2);
 		//	histnormal=db.getHistNormal();
 			dfinal = new double[db.users.size()];
 				for(int j=0;j<db.users.size();j++) {

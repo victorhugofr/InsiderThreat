@@ -1,4 +1,4 @@
-
+package br.ufrn.imd.lp2.io;
 public class HTTP extends Action {
 	
 	public HTTP (String id, String date, String user, String pc, String action) {

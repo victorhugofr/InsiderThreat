@@ -1,11 +1,27 @@
+package br.ufrn.imd.lp2.domain;
+
 import java.util.ArrayList;
+
+import br.ufrn.imd.lp2.io.Action;
+import br.ufrn.imd.lp2.io.Node;
+import br.ufrn.imd.lp2.io.Tree;
 
 public class DataBase {
 	public ArrayList<Tree>users;
 	
+	public static DataBase databaseSingleton;
+	
 	public DataBase() {
 		users=new ArrayList<Tree>();
 	}
+	
+	public static DataBase getInstance() {
+		if (databaseSingleton == null) {
+			databaseSingleton = new DataBase();
+		}
+		return databaseSingleton;
+	}
+	
 	public int[] getHistMed() {
 		int histmedio[]=new int[24];
 		int aux[]=new int[24];
