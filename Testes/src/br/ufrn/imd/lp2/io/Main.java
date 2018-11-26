@@ -13,11 +13,15 @@ public class Main {
 
 	public static void main(String[] args) {
 		DataBase db=new DataBase();
+		
 		User all = new User();
-		
-		lerUser("src/br/ufrn/imd/lp2/files/ldap2.csv",db,all);
-		
+		lerUser("src/br/ufrn/imd/lp2/files/ldap.csv",db,all);
 		db.getUsers();
+		
+		Device de = new Device();
+		ler("src/br/ufrn/imd/lp2/files/device.csv",db,de);
+		db.getDates();
+		
 		/*
 		Device de = new Device();
 		ler("src/br/ufrn/imd/lp2/files/device2.csv",db,de);
@@ -75,7 +79,7 @@ public class Main {
 			e.printStackTrace();
 		}
 	}
-	/*
+	
 	private static void ler(String nomearquivo,DataBase db,AbstractSuper de) {
 		Scanner leitor;
 		Leitor arquivo = new Leitor();
@@ -96,8 +100,6 @@ public class Main {
 					de=new Logon(teste[0],teste[1],teste[2],teste[3],teste[4]);
 				else if(de instanceof HTTP)
 					de=new HTTP(teste[0],teste[1],teste[2],teste[3],teste[4]);
-				else if(de instanceof User)
-					de=new User(teste[0],teste[1],teste[2],teste[3],teste[4]);
 				
 				db.verifica(de);	
 			}
@@ -105,5 +107,5 @@ public class Main {
 			e.printStackTrace();
 		}
 	}
-	*/
+	
 }

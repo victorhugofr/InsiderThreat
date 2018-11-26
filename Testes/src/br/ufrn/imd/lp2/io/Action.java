@@ -6,53 +6,72 @@ import java.text.DateFormat;
 
 public class Action extends AbstractSuper {
 	private String id;
-	private Date date;
+	private SystemDate date;
 	private String user;
-	private String pc;
+	private PC pc;
 	private String activity;
+	
 	DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 	protected SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+	
 	public Action() {
 		
 	}
+	
 	public Action(String id, String date, String user, String pc, String activity) {
 		this.id = id;
-//		this.date = date;
-		this.user = user;
-		this.pc = pc;
+		this.date = new SystemDate(date);
+		this.user = user.substring(5, 12);
+		this.pc = new PC(pc);
 		this.activity = activity;
+		/*
 		try {
 			this.date = df.parse(date.substring(0,10) +" "+ date.substring(11, 19));
-		System.out.println(date);
+		//System.out.println(date);
 		} catch (ParseException e) {
 			System.out.println(e.getMessage());
 		}
+		*/
 	}
 	
 	public String getId() {
 		return id;
 	}
 	
-	public Date getDate() {
+	public void setId(String newId) {
+		id = newId;
+	}
+	
+	public SystemDate getDate() {
 		return date;
 	}
 	
 	public String getDateString() {
-		return df.format(date);
+		return date.getDateString();
 	}
+	
+	
 	public String getHour() {
-		return df.format(date).substring(11, 13);
+		return date.getHour();
 	}
 	
 	public String getUser() {
 		return user;
 	}
 	
-	public String getPc() {
+	public PC getPc() {
 		return pc;
 	}
 	
 	public String getActivity() {
 		return activity;
+	}
+	
+	public void show() {
+		System.out.println("ID: " + getId());
+		System.out.println("Data: " + getDate());
+		System.out.println("Usuario: " + getUser());
+		System.out.println("PC: " + getPc());
+		System.out.println("Atividade: " + getActivity());
 	}
 }

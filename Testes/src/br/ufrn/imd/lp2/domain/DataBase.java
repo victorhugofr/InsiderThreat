@@ -9,7 +9,7 @@ import br.ufrn.imd.lp2.io.Tree;
 public class DataBase {
 	
 	public ArrayList<Tree>users;
-	
+
 	public static DataBase databaseSingleton;
 	
 	public DataBase() {
@@ -97,25 +97,26 @@ public class DataBase {
 			
 		}
 		
-		/*
+		
 		// VERIFICA SE O ARGUMENTO É DO TIPO ACTION
 		if(lido instanceof Action) {
 			Action teste = (Action) lido;
 			// VERIFICA SE JÁ EXISTE ÁRVORE PARA AQUELE USUÁRIO
 			Node aux;
 			int histaux2[]=new int[24];
-			boolean existe= false;
+			//boolean existe= false;
 			for(int i=0;i<users.size();i++) {
-				aux=users.get(i).search(users.get(i).getRoot(),teste.getUser()); 
+				aux = users.get(i).search(users.get(i).getRoot(), teste.getUser()); 
 				if(aux!=null) {//procura usuario
 					histaux2=aux.getHist();
 					histaux2[Integer.parseInt(teste.getHour())]++;
-					existe=true;
+					//existe=true;
 					aux.setHist(histaux2);
 					users.get(i).refresh(teste);
 				}
 			}
 			
+			/*
 			if(existe==false) {// CASO NAO EXISTA, CRIE E ADICIONE SUAS RAIZES
 				int histaux[]=new int[24];
 				Node id= new Node(teste.getUser());
@@ -140,8 +141,24 @@ public class DataBase {
 				user.setRoot(id);
 				users.add(user);
 			}
+			*/
 		}
-		*/
+		
+	}
+	
+	public void getDates() {
+		for(int i = 0; i < users.size(); i++) {
+			ArrayList<Node> actions = users.get(i).getRoot().getChilds();
+			if(actions.isEmpty()) {
+				//System.out.println("Vazio");
+			} else {
+				for(Node act: actions) {
+					SystemDate aux = (SystemDate) act.getValue();
+					aux.show();
+
+				}
+			}
+		}
 	}
 	
 	public void print() { // print das arvores

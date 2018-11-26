@@ -9,7 +9,7 @@ public class Node {
     public Node(AbstractSuper value) {
     	this.setValue(value);
     	setHist(new int[24]);
-    	setChilds(new ArrayList<Node>());
+    	childs = new ArrayList<Node>();
     }
     
     public Node() {
