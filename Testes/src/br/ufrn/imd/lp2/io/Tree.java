@@ -1,5 +1,8 @@
 package br.ufrn.imd.lp2.io;
 
+import java.util.ArrayList;
+//import br.ufrn.imd.lp2.io.*;
+
 public class Tree {
 	private Node root;
 	
@@ -16,7 +19,7 @@ public class Tree {
 	}
 	
 	
-	 public Node search(Node currentNode, String dataToFind) {
+	 public Node searchUser(Node currentNode, String dataToFind) {
 		 Node returnNode = null;
 	        int i = 0;
 	        AbstractSuper aux = currentNode.getValue();
@@ -31,8 +34,58 @@ public class Tree {
 		 return returnNode;
 	 }
 	 
+	 public Node searchDate(Node currentNode, String dataToFind) {
+		 Node returnNode = null;
+	        int i = 0;
+	        ArrayList<Node> dates = currentNode.getChilds();
+	        for(Node aux: dates) {
+	        	AbstractSuper tmp = (AbstractSuper) aux.getValue();
+	        	if(tmp instanceof SystemDate) {
+		        	SystemDate date = (SystemDate) aux.getValue();
+		        	if(date.getDateString().equals(dataToFind)) {
+		        		returnNode = aux;
+		        	}
+	        	}
+	        }
+	        
+		 return returnNode;
+	 }
 	 
-	 public void refresh(AbstractSuper lido) {
+	 public Node searchPC(Node currentNode, String dataToFind) {
+		 Node returnNode = null;
+	        int i = 0;
+	        ArrayList<Node> pcs = currentNode.getChilds();
+	        for(Node aux: pcs) {
+	        	AbstractSuper tmp = (AbstractSuper) aux.getValue();
+	        	if(tmp instanceof PC) {
+		        	PC pc = (PC) aux.getValue();
+		        	if(pc.getPcId().equals(dataToFind)) {
+		        		returnNode = aux;
+		        	}
+	        	}
+	        }
+	        
+		 return returnNode;
+	 }
+	 
+	 public Node searchAct(Node currentNode, String dataToFind) {
+		 Node returnNode = null;
+	        int i = 0;
+	        ArrayList<Node> acts = currentNode.getChilds();
+	        for(Node aux: acts) {
+	        	AbstractSuper tmp = (AbstractSuper) aux.getValue();
+	        	if(tmp instanceof Action) {
+		        	Action act = (Action) aux.getValue();
+		        	if(act.getActivity().equals(dataToFind)) {
+		        		returnNode = aux;
+		        	}
+	        	}
+	        }
+	        
+		 return returnNode;
+	 }
+	 
+	 public void refresh(Node user, AbstractSuper lido) {
 		 // VERIFICA SE JA EXISTE AS FOLHAS(DATA,PC,ATIVIDADE)
 		 // Downcast
 		 
@@ -41,18 +94,21 @@ public class Tree {
 		 int histaux2[]=new int[24];
 		 int histaux[]=new int[24];
 		 Node aux2,aux,aux3,aux4;
-		 aux=search(getRoot(),teste.getUser());
-		 aux2=search(aux,teste.getDateString()); 
+		 // aux=search(getRoot(),teste.getUser());
+		 // PROCURA DATA PARA AQUELE USUÁRIO
+		 aux2 = searchDate(user,teste.getDateString()); 
 			if(aux2!=null) {// PROCURA DATA
 				histaux2=aux2.getHist();
 				histaux2[Integer.parseInt(teste.getHour())]++;
 				aux2.setHist(histaux2);
-				aux3=search(aux,teste.getPc().getPcId());
+				// PROCURA PC PARA AQUELA DATA
+				aux3=searchPC(aux2,teste.getPc().getPcId());
 				if(aux3!=null) {// PROCURA PC
 					histaux2=aux3.getHist();
 					histaux2[Integer.parseInt(teste.getHour())]++;
 					aux3.setHist(histaux2);
-					aux4=search(aux,teste.getActivity());
+					// PROCURA ATIVIDADE DENTRO DO PC
+					aux4=searchAct(aux3,teste.getActivity());
 					if(aux4!=null) {// PROCURA ATIVIDADE
 						histaux2=aux4.getHist();
 						histaux2[Integer.parseInt(teste.getHour())]++;
@@ -70,7 +126,7 @@ public class Tree {
 					activity.setHist(histaux);
 					PC.getChilds().add(activity);
 					PC.setHist(histaux);
-					aux.getChilds().add(PC);
+					user.getChilds().add(PC);
 				}
 			}else { // SE NÃO TEM DATA
 				histaux[Integer.parseInt(teste.getHour())]++;
@@ -89,7 +145,7 @@ public class Tree {
 				date.setHist(histaux);
 				pc.setHist(histaux);
 				activity.setHist(histaux);
-				aux.getChilds().add(date);
+				user.getChilds().add(date);
 			}
 	}
 	 

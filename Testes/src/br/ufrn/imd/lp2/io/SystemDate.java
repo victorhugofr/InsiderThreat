@@ -30,7 +30,7 @@ public class SystemDate extends AbstractSuper {
 	}
 	
 	public String getDateString() {
-		return df.format(date);
+		return df.format(date).substring(0,10);
 	}
 	
 	public String getHour() {

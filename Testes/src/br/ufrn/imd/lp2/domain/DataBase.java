@@ -82,7 +82,7 @@ public class DataBase {
 			// VERIFICA SE JA EXISTE UMA ÁRVORE COM AQUELE USER
 			boolean existe= false;
 			for(int i=0;i<users.size();i++) {
-				aux=users.get(i).search(users.get(i).getRoot(), member.getId()); 
+				aux=users.get(i).searchUser(users.get(i).getRoot(), member.getId()); 
 				if(aux!=null) {//procura usuario
 					existe=true;
 				}
@@ -106,13 +106,13 @@ public class DataBase {
 			int histaux2[]=new int[24];
 			//boolean existe= false;
 			for(int i=0;i<users.size();i++) {
-				aux = users.get(i).search(users.get(i).getRoot(), teste.getUser()); 
+				aux = users.get(i).searchUser(users.get(i).getRoot(), teste.getUser()); 
 				if(aux!=null) {//procura usuario
 					histaux2=aux.getHist();
 					histaux2[Integer.parseInt(teste.getHour())]++;
 					//existe=true;
 					aux.setHist(histaux2);
-					users.get(i).refresh(teste);
+					users.get(i).refresh(aux, teste);
 				}
 			}
 			
@@ -148,19 +148,39 @@ public class DataBase {
 	
 	public void getDates() {
 		for(int i = 0; i < users.size(); i++) {
-			ArrayList<Node> actions = users.get(i).getRoot().getChilds();
-			if(actions.isEmpty()) {
+			ArrayList<Node> dates = users.get(i).getRoot().getChilds();
+			if(dates.isEmpty()) {
 				//System.out.println("Vazio");
 			} else {
-				for(Node act: actions) {
-					SystemDate aux = (SystemDate) act.getValue();
-					aux.show();
-
+				for(Node act: dates) {
+					AbstractSuper tmp = (AbstractSuper) act.getValue();
+					if(tmp instanceof SystemDate) {
+						SystemDate aux = (SystemDate) act.getValue();
+						aux.show();
+					}
 				}
 			}
 		}
 	}
 	
+	/*
+	public void getDates() {
+		for(int i = 0; i < users.size(); i++) {
+			ArrayList<Node> dates = users.get(i).getRoot().getChilds();
+			if(dates.isEmpty()) {
+				//System.out.println("Vazio");
+			} else {
+				for(Node act: dates) {
+					AbstractSuper tmp = (AbstractSuper) act.getValue();
+					if(tmp instanceof SystemDate) {
+						SystemDate aux = (SystemDate) act.getValue();
+						aux.show();
+					}
+				}
+			}
+		}
+	}
+	*/
 	public void print() { // print das arvores
 		Node aux,aux2,aux3,aux4;
 		int i,j,z,h;
