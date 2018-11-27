@@ -150,7 +150,7 @@ public class DataBase {
 				//System.out.println("Vazio");
 			} else {
 				for(Node act: dates) {
-					AbstractSuper tmp = (AbstractSuper) act.getValue();
+//					AbstractSuper tmp = (AbstractSuper) act.getValue();
 					//if(tmp instanceof SystemDate) {
 						SystemDate aux = (SystemDate) act.getValue();
 						aux.show();
@@ -250,8 +250,13 @@ public class DataBase {
 								computer.show();
 								ArrayList<Node> acts = pc.getChilds();
 								for(Node act: acts) {
-									Action action = (Action) act.getValue();
+									Activity action = (Activity) act.getValue();
 									action.show();
+									ArrayList<Node> acts2 = act.getChilds();
+									for(Node act3: acts2) {
+										Action action3 = (Action) act3.getValue();
+										action3.show();
+									}
 								}
 							//}
 						}

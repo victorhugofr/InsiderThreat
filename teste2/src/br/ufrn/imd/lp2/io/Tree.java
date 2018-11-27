@@ -37,7 +37,7 @@ public class Tree {
 		 Node returnNode = null;
 	        ArrayList<Node> dates = currentNode.getChilds();
 	        for(Node aux: dates) {
-	        	AbstractSuper tmp = (AbstractSuper) aux.getValue();
+	      //  	AbstractSuper tmp = (AbstractSuper) aux.getValue();
 	        	//if(tmp instanceof SystemDate) {
 		        	SystemDate date = (SystemDate) aux.getValue();
 		        	if(date.getDateString().equals(dataToFind)) {
@@ -53,7 +53,7 @@ public class Tree {
 		 Node returnNode = null;
 	        ArrayList<Node> pcs = currentNode.getChilds();
 	        for(Node aux: pcs) {
-	        	AbstractSuper tmp = (AbstractSuper) aux.getValue();
+	//        	AbstractSuper tmp = (AbstractSuper) aux.getValue();
 	        	//if(tmp instanceof PC) {
 		        	PC pc = (PC) aux.getValue();
 		        	if(pc.getPcId().equals(dataToFind)) {
@@ -65,14 +65,29 @@ public class Tree {
 		 return returnNode;
 	 }
 	 
-	 public Node searchAct(Node currentNode, String dataToFind) {
+	 public Node searchActivity(Node currentNode, String dataToFind) {
+		 Node returnNode = null;
+	        ArrayList<Node> acts = currentNode.getChilds();
+	        for(Node aux: acts) {
+	  //      	AbstractSuper tmp = (AbstractSuper) aux.getValue();
+	        	//if(tmp instanceof Action) {
+		        	Activity act = (Activity) aux.getValue();
+		        	if(act.getActivityId().equals(dataToFind)) {
+		        		returnNode = aux;
+		        	}
+	        	//}
+	        }
+	        
+		 return returnNode;
+	 }
+	 public Node searchAct2(Node currentNode, String dataToFind) {
 		 Node returnNode = null;
 	        ArrayList<Node> acts = currentNode.getChilds();
 	        for(Node aux: acts) {
 	        	AbstractSuper tmp = (AbstractSuper) aux.getValue();
 	        	//if(tmp instanceof Action) {
 		        	Action act = (Action) aux.getValue();
-		        	if(act.getActivity().equals(dataToFind)) {
+		        	if(act.getAct().equals(dataToFind)) {
 		        		returnNode = aux;
 		        	}
 	        	//}
@@ -105,12 +120,12 @@ public class Tree {
 					aux3.setHist(histaux2);
 					// PROCURA ATIVIDADE DENTRO DO PC
 					if(teste instanceof HTTP) {// PROCURA ATIVIDADE
-						aux4=searchAct(aux3,"http");
+						aux4=searchActivity(aux3,"http");
 						if(aux4!=null) {
 							histaux2=aux4.getHist();
 							histaux2[Integer.parseInt(teste.getHour())]++;
 							aux4.setHist(histaux2);
-							aux5=searchAct(aux4,teste.getActivity());
+							aux5=searchAct2(aux4,teste.getAct());
 							if(aux5!=null) {
 								histaux2=aux5.getHist();
 								histaux2[Integer.parseInt(teste.getHour())]++;
@@ -119,24 +134,30 @@ public class Tree {
 								Node activity = new Node(teste);
 								histaux[Integer.parseInt(teste.getHour())]++;
 								activity.setHist(histaux);
-								aux3.getChilds().add(activity);
+								aux4.getChilds().add(activity);
 							}
 						}
 						else {// SE NÃO TEM ATIVIDADE, ADICIONA NO PC
-							Action novo=new Action();
-							novo.setActivity("http");
-							Node activity = new Node(novo);
 							histaux[Integer.parseInt(teste.getHour())]++;
+							Node activity=new Node(teste);
+							Activity novaact= new Activity("device");
+							
+							AbstractSuper newActivity = novaact;
+							Node act = new Node(newActivity);
 							activity.setHist(histaux);
-							aux3.getChilds().add(activity);
+							act.getChilds().add(activity);
+							act.setHist(histaux);
+							aux3.getChilds().add(act);
+							
 						}
 					}else if(teste instanceof Device) {
-						aux4=searchAct(aux3,"device");
+						//System.out.println("entroudevice");
+						aux4=searchActivity(aux3,"device");
 						if(aux4!=null) {
 							histaux2=aux4.getHist();
 							histaux2[Integer.parseInt(teste.getHour())]++;
 							aux4.setHist(histaux2);
-							aux5=searchAct(aux4,teste.getActivity());
+							aux5=searchAct2(aux4,teste.getAct());
 							if(aux5!=null) {
 								histaux2=aux5.getHist();
 								histaux2[Integer.parseInt(teste.getHour())]++;
@@ -145,24 +166,29 @@ public class Tree {
 								Node activity = new Node(teste);
 								histaux[Integer.parseInt(teste.getHour())]++;
 								activity.setHist(histaux);
-								aux3.getChilds().add(activity);
+								aux4.getChilds().add(activity);
 							}
 						}
 						else {// SE NÃO TEM ATIVIDADE, ADICIONA NO PC
-							Action novo=new Action();
-							novo.setActivity("device");
-							Node activity = new Node(novo);
 							histaux[Integer.parseInt(teste.getHour())]++;
+							Node activity=new Node(teste);
+							Activity novaact= new Activity("device");
+							
+							AbstractSuper newActivity = novaact;
+							Node act = new Node(newActivity);
 							activity.setHist(histaux);
-							aux3.getChilds().add(activity);
+							act.getChilds().add(activity);
+							act.setHist(histaux);
+							aux3.getChilds().add(act);
 						}
 					}else if(teste instanceof Logon) {
-						aux4=searchAct(aux3,"logon");
+						
+						aux4=searchActivity(aux3,"logon");
 						if(aux4!=null) {
 							histaux2=aux4.getHist();
 							histaux2[Integer.parseInt(teste.getHour())]++;
 							aux4.setHist(histaux2);
-							aux5=searchAct(aux4,teste.getActivity());
+							aux5=searchAct2(aux4,teste.getAct());
 							if(aux5!=null) {
 								histaux2=aux5.getHist();
 								histaux2[Integer.parseInt(teste.getHour())]++;
@@ -171,23 +197,37 @@ public class Tree {
 								Node activity = new Node(teste);
 								histaux[Integer.parseInt(teste.getHour())]++;
 								activity.setHist(histaux);
-								aux3.getChilds().add(activity);
+								aux4.getChilds().add(activity);
 							}
 						}
 						else {// SE NÃO TEM ATIVIDADE, ADICIONA NO PC
-							Action novo=new Action();
-							novo.setActivity("logon");
-							Node activity = new Node(novo);
 							histaux[Integer.parseInt(teste.getHour())]++;
+							Node activity=new Node(teste);
+							Activity novaact= new Activity("device");
+							
+							AbstractSuper newActivity = novaact;
+							Node act = new Node(newActivity);
 							activity.setHist(histaux);
-							aux3.getChilds().add(activity);
+							act.getChilds().add(activity);
+							act.setHist(histaux);
+							aux3.getChilds().add(act);
 						}
 					}
-				}else { // SE NÃO TEM PC
+				}else { // SE NÃO TEM PC*************
+					
 					histaux[Integer.parseInt(teste.getHour())]++;
 					Node activity=new Node(teste);
 					Action tmp = (Action) activity.getValue();
 					
+					Activity novaact= new Activity("device");
+					
+					AbstractSuper newActivity = novaact;
+					Node act = new Node(newActivity);
+					activity.setHist(histaux);
+					act.getChilds().add(activity);
+					act.setHist(histaux);
+
+
 					AbstractSuper newPC = tmp.getPc();
 					Node pc = new Node(newPC);
 					activity.setHist(histaux);
@@ -200,13 +240,22 @@ public class Tree {
 				Node activity=new Node(teste);
 				Action tmp = (Action) activity.getValue();
 				
+				Activity novaact= new Activity("device");
+				
+				AbstractSuper newActivity = novaact;
+				Node act = new Node(newActivity);
+				activity.setHist(histaux);
+				act.getChilds().add(activity);
+				act.setHist(histaux);
+			
+				
 				AbstractSuper newDate = tmp.getDate();
 				Node date = new Node(newDate);
 				
 				AbstractSuper newPC = tmp.getPc();
 				Node pc = new Node(newPC);
 				
-				pc.getChilds().add(activity);
+				pc.getChilds().add(act);
 				date.getChilds().add(pc);
 				
 				date.setHist(histaux);

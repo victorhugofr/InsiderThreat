@@ -21,8 +21,9 @@ public class Main {
 		Device de = new Device();
 		ler("src/device2.csv",db,de);
 		//ler("http-sumarizado.csv",db,de);
-		ler("src/logon2.csv",db,de);
-		db.userInfo("RES0962");
+		Logon dl=new Logon();
+		ler("src/logon2.csv",db,dl);
+		db.userInfo("KEE0997");
 		
 		/*
 		Device de = new Device();

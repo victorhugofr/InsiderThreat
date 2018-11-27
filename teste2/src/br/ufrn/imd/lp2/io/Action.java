@@ -1,7 +1,5 @@
 package br.ufrn.imd.lp2.io;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.text.DateFormat;
 
 public class Action extends AbstractSuper {
@@ -9,7 +7,9 @@ public class Action extends AbstractSuper {
 	private SystemDate date;
 	private String user;
 	private PC pc;
-	private String activity;
+	private Activity activity;
+	private String act;
+	
 	
 	DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 	protected SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -17,13 +17,13 @@ public class Action extends AbstractSuper {
 	public Action() {
 		
 	}
-	
+
 	public Action(String id, String date, String user, String pc, String activity) {
 		this.id = id;
 		this.date = new SystemDate(date);
 		this.user = user.substring(5, 12);
 		this.pc = new PC(pc);
-		this.activity = activity;
+		this.act = activity;
 		/*
 		try {
 			this.date = df.parse(date.substring(0,10) +" "+ date.substring(11, 19));
@@ -36,6 +36,9 @@ public class Action extends AbstractSuper {
 	
 	public String getId() {
 		return id;
+	}
+	public String getAct() {
+		return act;
 	}
 	
 	public void setId(String newId) {
@@ -63,15 +66,11 @@ public class Action extends AbstractSuper {
 		return pc;
 	}
 	
-	public String getActivity() {
+	public Activity getActivity() {
 		return activity;
 	}
 	
-	public void setActivity(String value) {
-		activity=value;
-	}
-	
 	public void show() {
-		System.out.println("Atividade: " + getActivity());
+		System.out.println("Atividade: " + getAct());
 	}
 }
