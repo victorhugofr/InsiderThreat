@@ -20,7 +20,9 @@ public class Main {
 		
 		Device de = new Device();
 		ler("src/br/ufrn/imd/lp2/files/device.csv",db,de);
-		db.getDates();
+		ler("src/br/ufrn/imd/lp2/files/http-sumarizado.csv",db,de);
+		ler("src/br/ufrn/imd/lp2/files/logon-sumarizado.csv",db,de);
+		db.userInfo("RES0962");
 		
 		/*
 		Device de = new Device();

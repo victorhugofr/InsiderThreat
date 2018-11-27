@@ -2,9 +2,6 @@ package br.ufrn.imd.lp2.domain;
 
 import java.util.ArrayList;
 import br.ufrn.imd.lp2.io.*;
-import br.ufrn.imd.lp2.io.Action;
-import br.ufrn.imd.lp2.io.Node;
-import br.ufrn.imd.lp2.io.Tree;
 
 public class DataBase {
 	
@@ -230,6 +227,36 @@ public class DataBase {
 					}
 				}
 			}
+		}
+	}
+	
+	public void userInfo(String id) {
+		for(int i = 0; i < users.size(); i++) {
+			AbstractSuper aux = users.get(i).getRoot().getValue();
+				User member = (User) aux;
+				if(member.getId().equals(id)) {
+					member.show();
+					ArrayList<Node> dates = users.get(i).getRoot().getChilds();
+					if(dates.isEmpty()) {
+						System.out.println("Vazio");
+					}
+					for(Node date: dates) {
+						SystemDate data = (SystemDate) date.getValue();
+						data.show();
+						ArrayList<Node> pcs = date.getChilds();
+						for(Node pc: pcs) {
+							//if(pc.getValue() instanceof PC) {
+								PC computer = (PC) pc.getValue();
+								computer.show();
+								ArrayList<Node> acts = pc.getChilds();
+								for(Node act: acts) {
+									Action action = (Action) act.getValue();
+									action.show();
+								}
+							//}
+						}
+					}
+				}
 		}
 	}
 }
