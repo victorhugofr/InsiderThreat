@@ -154,10 +154,10 @@ public class DataBase {
 			} else {
 				for(Node act: dates) {
 					AbstractSuper tmp = (AbstractSuper) act.getValue();
-					if(tmp instanceof SystemDate) {
+					//if(tmp instanceof SystemDate) {
 						SystemDate aux = (SystemDate) act.getValue();
 						aux.show();
-					}
+					//}
 				}
 			}
 		}
@@ -175,11 +175,11 @@ public class DataBase {
 					//System.out.println("Chegou");
 					for(Node aux: pcs) {
 						AbstractSuper tmp = (AbstractSuper) aux.getValue();
-						if(tmp instanceof PC) {
+						//if(tmp instanceof PC) {
 							//System.out.println("Chegou");
 							PC pc = (PC) aux.getValue();
 							pc.show();
-						}
+						//}
 					}
 				}
 				
@@ -200,11 +200,11 @@ public class DataBase {
 						//System.out.println("Chegou");
 						for(Node aux: actions) {
 							AbstractSuper tmp = (AbstractSuper) aux.getValue();
-							if(tmp instanceof Action) {
+							//if(tmp instanceof Action) {
 								//System.out.println("Chegou");
 								Action act = (Action) aux.getValue();
 								act.show();
-							}
+							//}
 						}
 					}
 				}

@@ -40,12 +40,12 @@ public class Tree {
 	        ArrayList<Node> dates = currentNode.getChilds();
 	        for(Node aux: dates) {
 	        	AbstractSuper tmp = (AbstractSuper) aux.getValue();
-	        	if(tmp instanceof SystemDate) {
+	        	//if(tmp instanceof SystemDate) {
 		        	SystemDate date = (SystemDate) aux.getValue();
 		        	if(date.getDateString().equals(dataToFind)) {
 		        		returnNode = aux;
 		        	}
-	        	}
+	        	//}
 	        }
 	        
 		 return returnNode;
@@ -57,12 +57,12 @@ public class Tree {
 	        ArrayList<Node> pcs = currentNode.getChilds();
 	        for(Node aux: pcs) {
 	        	AbstractSuper tmp = (AbstractSuper) aux.getValue();
-	        	if(tmp instanceof PC) {
+	        	//if(tmp instanceof PC) {
 		        	PC pc = (PC) aux.getValue();
 		        	if(pc.getPcId().equals(dataToFind)) {
 		        		returnNode = aux;
 		        	}
-	        	}
+	        	//}
 	        }
 	        
 		 return returnNode;
@@ -74,12 +74,12 @@ public class Tree {
 	        ArrayList<Node> acts = currentNode.getChilds();
 	        for(Node aux: acts) {
 	        	AbstractSuper tmp = (AbstractSuper) aux.getValue();
-	        	if(tmp instanceof Action) {
+	        	//if(tmp instanceof Action) {
 		        	Action act = (Action) aux.getValue();
 		        	if(act.getActivity().equals(dataToFind)) {
 		        		returnNode = aux;
 		        	}
-	        	}
+	        	//}
 	        }
 	        
 		 return returnNode;
@@ -140,7 +140,7 @@ public class Tree {
 				Node date = new Node(newDate);
 				
 				AbstractSuper newPC = tmp.getPc();
-				Node pc = new Node(newDate);
+				Node pc = new Node(newPC);
 				
 				pc.getChilds().add(activity);
 				date.getChilds().add(pc);

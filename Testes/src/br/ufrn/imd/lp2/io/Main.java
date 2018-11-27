@@ -16,11 +16,11 @@ public class Main {
 		
 		User all = new User();
 		lerUser("src/br/ufrn/imd/lp2/files/ldap.csv",db,all);
-		db.getUsers();
+		//db.getUsers();
 		
 		Device de = new Device();
 		ler("src/br/ufrn/imd/lp2/files/device.csv",db,de);
-		db.getActions();
+		db.getDates();
 		
 		/*
 		Device de = new Device();
