@@ -163,24 +163,30 @@ public class DataBase {
 		}
 	}
 	
-	/*
-	public void getDates() {
+	
+	public void getPcs() {
 		for(int i = 0; i < users.size(); i++) {
 			ArrayList<Node> dates = users.get(i).getRoot().getChilds();
-			if(dates.isEmpty()) {
-				//System.out.println("Vazio");
-			} else {
-				for(Node act: dates) {
-					AbstractSuper tmp = (AbstractSuper) act.getValue();
-					if(tmp instanceof SystemDate) {
-						SystemDate aux = (SystemDate) act.getValue();
-						aux.show();
+			for(Node date: dates) {
+				ArrayList<Node> pcs = date.getChilds();
+				if(pcs.isEmpty()) {
+					System.out.println("Vazio");
+				} else {
+					//System.out.println("Chegou");
+					for(Node aux: pcs) {
+						AbstractSuper tmp = (AbstractSuper) aux.getValue();
+						if(tmp instanceof PC) {
+							//System.out.println("Chegou");
+							PC pc = (PC) aux.getValue();
+							pc.show();
+						}
 					}
 				}
+				
 			}
 		}
 	}
-	*/
+	
 	public void print() { // print das arvores
 		Node aux,aux2,aux3,aux4;
 		int i,j,z,h;

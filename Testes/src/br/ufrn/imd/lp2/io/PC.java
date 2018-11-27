@@ -20,4 +20,8 @@ public class PC extends AbstractSuper{
 		return actions;
 	}
 	*/
+	
+	public void show() {
+		System.out.println(getPcId());
+	}
 }

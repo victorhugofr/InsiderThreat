@@ -113,20 +113,23 @@ public class Tree {
 						histaux2=aux4.getHist();
 						histaux2[Integer.parseInt(teste.getHour())]++;
 						aux4.setHist(histaux2);
-					}else {// SE NÃO TEM ATIVIDADE
+					}else {// SE NÃO TEM ATIVIDADE, ADICIONA NO PC
 						Node activity = new Node(teste);
 						histaux[Integer.parseInt(teste.getHour())]++;
 						activity.setHist(histaux);
-						aux2.getChilds().add(activity);
+						aux3.getChilds().add(activity);
 					}
 				}else { // SE NÃO TEM PC
 					histaux[Integer.parseInt(teste.getHour())]++;
-					Node PC= new Node(teste);
 					Node activity=new Node(teste);
+					Action tmp = (Action) activity.getValue();
+					
+					AbstractSuper newPC = tmp.getPc();
+					Node pc = new Node(newPC);
 					activity.setHist(histaux);
-					PC.getChilds().add(activity);
-					PC.setHist(histaux);
-					user.getChilds().add(PC);
+					pc.getChilds().add(activity);
+					pc.setHist(histaux);
+					aux2.getChilds().add(pc);
 				}
 			}else { // SE NÃO TEM DATA
 				histaux[Integer.parseInt(teste.getHour())]++;
