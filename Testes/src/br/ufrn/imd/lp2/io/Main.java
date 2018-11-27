@@ -20,7 +20,7 @@ public class Main {
 		
 		Device de = new Device();
 		ler("src/br/ufrn/imd/lp2/files/device.csv",db,de);
-		db.getPcs();
+		db.getActions();
 		
 		/*
 		Device de = new Device();

@@ -68,10 +68,6 @@ public class Action extends AbstractSuper {
 	}
 	
 	public void show() {
-		System.out.println("ID: " + getId());
-		System.out.println("Data: " + getDate());
-		System.out.println("Usuario: " + getUser());
-		System.out.println("PC: " + getPc());
 		System.out.println("Atividade: " + getActivity());
 	}
 }

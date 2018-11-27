@@ -187,6 +187,31 @@ public class DataBase {
 		}
 	}
 	
+	public void getActions() {
+		for(int i = 0; i < users.size(); i++) {
+			ArrayList<Node> dates = users.get(i).getRoot().getChilds();
+			for(Node date: dates) {
+				ArrayList<Node> pcs = date.getChilds();
+				for(Node pc: pcs) {
+					ArrayList<Node> actions = pc.getChilds();
+					if(actions.isEmpty()) {
+						System.out.println("Vazio");
+					} else {
+						//System.out.println("Chegou");
+						for(Node aux: actions) {
+							AbstractSuper tmp = (AbstractSuper) aux.getValue();
+							if(tmp instanceof Action) {
+								//System.out.println("Chegou");
+								Action act = (Action) aux.getValue();
+								act.show();
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
 	public void print() { // print das arvores
 		Node aux,aux2,aux3,aux4;
 		int i,j,z,h;
