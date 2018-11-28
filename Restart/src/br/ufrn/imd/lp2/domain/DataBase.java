@@ -151,10 +151,21 @@ public class DataBase {
 							for(Node act: acts) {
 								Action action = (Action) act.getValue();
 								action.show();
-								ArrayList<Node> devices = act.getChilds();
-								for(Node device: devices) {
-									Device dvc = (Device) device.getValue();
-									dvc.show();
+								ArrayList<Node> activities = act.getChilds();
+								for(Node end: activities) {
+									if(end.getValue() instanceof Device) {
+										Device dvc = (Device) end.getValue();
+										dvc.show();
+									}
+									
+									if(end.getValue() instanceof HTTP) {
+										HTTP site = (HTTP) end.getValue();
+										site.show();
+									}
+									if(end.getValue() instanceof Logon) {
+										Logon site = (Logon) end.getValue();
+										site.show();
+									}
 								}
 							}
 						}
@@ -209,14 +220,15 @@ public class DataBase {
 			
 			while(leitor.hasNext()){
 				linha = leitor.nextLine();
-				arquivo.setValoresEntreVirgulas(linha);
-				teste= arquivo.quebrandoLinhas();
+				//arquivo.setValoresEntreVirgulas(linha);
+				teste = linha.split(",");
+				//teste= arquivo.quebrandoLinhas();
 				
 				if(nomearquivo.equals("src/br/ufrn/imd/lp2/files/device.csv"))
 					de=new DeviceLE(teste[0],teste[1],teste[2],teste[3],teste[4]);
-				else if(nomearquivo.equals("logon-complet.csv"))
+				else if(nomearquivo.equals("src/br/ufrn/imd/lp2/files/logon-completo.csv"))
 					de=new LogonLE(teste[0],teste[1],teste[2],teste[3],teste[4]);
-				else if(nomearquivo.equals("http-completo.csv"))
+				else if(nomearquivo.equals("src/br/ufrn/imd/lp2/files/http-completo.csv"))
 					de=new HttpLE(teste[0],teste[1],teste[2],teste[3],teste[4]);
 				
 				//SystemDate date = new SystemDate(de.getDate());
@@ -228,12 +240,58 @@ public class DataBase {
 						//System.out.println("Encontrou");
 						SystemDate date = new SystemDate(de.getDate());
 						users.get(i).getRoot().atualizaHist(date.getHour());
-						users.get(i).addLE(de);
+						users.get(i).addLE(de, date.getHour());
 					}
 				}
 			}
 		}catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void anomalie(String funcao) {
+		double dfinal[]  = new double[users.size()];
+		double media=0;
+		double dp=0;
+		double normal[];
+		for(int k = 0; k < users.size(); k++) {
+			AbstractSuper aux = users.get(k).getRoot().getValue();
+			User member = (User) aux;
+			if(member.getRole().equals(funcao)) {
+				//dfinal = new double[users.size()];
+				for(int j=0;j<users.size();j++) {
+					for(int i=0;i<24;i++) {
+						// Somatorio
+						dfinal[j]+=Math.pow(users.get(j).getRoot().getHist()[i]-getHistMed()[i], 2);
+					}
+					
+					// Raiz do somatorio
+					dfinal[j]=Math.sqrt(dfinal[j]);
+				}
+				//System.out.println(Math.abs(dfinal[k]));
+			}
+		}
+		
+		for(int i=0;i<users.size();i++) {
+			media+=dfinal[i];
+		}
+			
+		media=media/users.size();
+			
+		for(int i=0;i<users.size();i++) {
+			dp+=Math.pow(dfinal[i]-media,2);
+		}
+			
+		dp=Math.sqrt(dp/users.size());
+			
+		normal = new double[users.size()];
+		
+		
+		for(int i=0;i<users.size();i++) {
+			//	System.out.println(dfinal[i]);
+			//normal[i]=(dfinal[i]-media)/dp;
+			System.out.println(Math.abs(dfinal[i]));
+		}
+		
 	}
 }

@@ -33,49 +33,49 @@ public class Tree {
 		 return returnNode;
 	 }
 	
-	public void addLE(LogEntry le) {
+	public void addLE(LogEntry le, String hist) {
 		// Para a Data
 		String ts= le.getDate();
 		Node dataNode = getDateChild(ts);
-		AbstractSuper dataAs = dataNode.getValue();
-		SystemDate dataFinal = (SystemDate) dataAs;
-		dataNode.atualizaHist(dataFinal.getHour());
+		//AbstractSuper dataAs = dataNode.getValue();
+		//SystemDate dataFinal = (SystemDate) dataAs;
+		dataNode.atualizaHist(hist);
 		// Para o PC
 		String pcId= le.getPc();
 		Node pcNode = getPcChild(dataNode, pcId);
 		//SystemDate date = new SystemDate(le.getDate());
-		pcNode.atualizaHist(dataFinal.getHour());
+		pcNode.atualizaHist(hist);
 		// Para as Actions
 		if(le instanceof LogonLE) {
 			LogonLE logonle = (LogonLE) le;
 			Node logonNode = getActionChild(pcNode, "Log");
 			//SystemDate logonDate = new SystemDate(le.getDate());
-			logonNode.atualizaHist(dataFinal.getHour());
+			logonNode.atualizaHist(hist);
 			
 			String login = logonle.getLogin();
 			Node loginNode = getLoginChild(logonNode, login);
 			//SystemDate loginDate = new SystemDate(le.getDate());
-			loginNode.atualizaHist(dataFinal.getHour());
+			loginNode.atualizaHist(hist);
 		} else if(le instanceof DeviceLE) {
 			DeviceLE devicele = (DeviceLE) le;
 			Node deviceNode = getActionChild(pcNode, "Device");
 			//SystemDate deviceDate = new SystemDate(le.getDate());
-			deviceNode.atualizaHist(dataFinal.getHour());
+			deviceNode.atualizaHist(hist);
 			
 			String connection = devicele.getConnection();
 			Node cntNode = getCntChild(deviceNode, connection);
 			//SystemDate cntDate = new SystemDate(le.getDate());
-			cntNode.atualizaHist(dataFinal.getHour());
+			cntNode.atualizaHist(hist);
 		} else if(le instanceof HttpLE) {
 			HttpLE httple = (HttpLE) le;
 			Node httpNode = getActionChild(pcNode, "Http");
 			//SystemDate httpDate = new SystemDate(le.getDate());
-			httpNode.atualizaHist(dataFinal.getHour());
+			httpNode.atualizaHist(hist);
 			
 			String url = httple.getUrl();
 			Node urlNode = getHttpChild(httpNode, url);
 			//SystemDate urlDate = new SystemDate(le.getDate());
-			urlNode.atualizaHist(dataFinal.getHour());
+			urlNode.atualizaHist(hist);
 		}
 	}
 	
