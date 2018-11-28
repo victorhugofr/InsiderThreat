@@ -29,7 +29,7 @@ public class SystemDate extends AbstractSuper {
 		this.date = date;
 	}
 	
-	public String getDateString() {
+	public String getDay() {
 		return df.format(date).substring(0,10);
 	}
 	
@@ -38,6 +38,6 @@ public class SystemDate extends AbstractSuper {
 	}
 	
 	public void show() {
-		System.out.println(getDateString());
+		System.out.println(getDay());
 	}
 }

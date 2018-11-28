@@ -1,36 +1,22 @@
 package br.ufrn.imd.lp2.io;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
 
 import br.ufrn.imd.lp2.domain.DataBase;
 
 public class Main {
 
-	private static double dfinal[];
-	private static double media=0;
-	private static double dp=0;
-	private static double normal[];
-
 	public static void main(String[] args) {
-		DataBase db=new DataBase();
-		
-		User all = new User();
-		lerUser("src/ldap.csv",db,all);
-		//db.getUsers();
-		
-		Device de = new Device();
-		ler("src/device2.csv",db,de);
-		//ler("http-sumarizado.csv",db,de);
-		Logon dl=new Logon();
-		ler("src/logon2.csv",db,dl);
-		db.userInfo("KEE0997");
-		
-		/*
-		Device de = new Device();
-		ler("src/br/ufrn/imd/lp2/files/device2.csv",db,de);
-		Logon de2 = new Logon();
-		ler("src/br/ufrn/imd/lp2/files/logon2.csv",db,de2);
-		
+		  double dfinal[];
+		  double media=0;
+		  double dp=0;
+		  double normal[];
+		DataBase db = new DataBase();
+		db.lerUser("src/br/ufrn/imd/lp2/files/ldap.csv");
+		db.ler("src/br/ufrn/imd/lp2/files/device.csv");
+		//db.checkDates();
+		//db.checkPcs();
+		//db.checkActions();
+		//db.checkDevices();
+
 		//	histnormal=db.getHistNormal();
 			dfinal = new double[db.users.size()];
 				for(int j=0;j<db.users.size();j++) {
@@ -48,67 +34,15 @@ public class Main {
 				dp+=Math.pow(dfinal[i]-media,2);
 			}
 			dp=Math.sqrt(dp/db.users.size());
+			
+			
 			normal = new double[db.users.size()];
 			for(int i=0;i<db.users.size();i++) {
+			//	System.out.println(dfinal[i]);
 				normal[i]=(dfinal[i]-media)/dp;
 				System.out.print(Math.abs(normal[i])+" ");
 			}
 			
-			
-			*/
-		
-	    }
-	
-			
-	private static void lerUser(String nomearquivo,DataBase db,AbstractSuper de) {
-		Scanner leitor;
-		Leitor arquivo = new Leitor();
-		String[] teste;
-		try {
-			leitor = new Scanner(arquivo.leitura(nomearquivo));	
-			String linha = new String();
-			leitor.nextLine();
-			
-			while(leitor.hasNext()){
-				linha = leitor.nextLine();
-				arquivo.setValoresEntreVirgulas(linha);
-				teste= arquivo.quebrandoLinhas();
-				
-				de=new User(teste[0],teste[1],teste[2],teste[3],teste[4]);
-				
-				db.verifica(de);	
-			}
-		}catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+		db.userInfo("RES0962");
 	}
-	
-	private static void ler(String nomearquivo,DataBase db,AbstractSuper de) {
-		Scanner leitor;
-		Leitor arquivo = new Leitor();
-		String[] teste;
-		try {
-			leitor = new Scanner(arquivo.leitura(nomearquivo));	
-			String linha = new String();
-			leitor.nextLine();
-			
-			while(leitor.hasNext()){
-				linha = leitor.nextLine();
-				arquivo.setValoresEntreVirgulas(linha);
-				teste= arquivo.quebrandoLinhas();
-				
-				if(de instanceof Device)
-					de=new Device(teste[0],teste[1],teste[2],teste[3],teste[4]);
-				else if(de instanceof Logon)
-					de=new Logon(teste[0],teste[1],teste[2],teste[3],teste[4]);
-				else if(de instanceof HTTP)
-					de=new HTTP(teste[0],teste[1],teste[2],teste[3],teste[4]);
-				
-				db.verifica(de);	
-			}
-		}catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
-	
 }

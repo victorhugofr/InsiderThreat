@@ -1,11 +1,22 @@
 package br.ufrn.imd.lp2.io;
-public class Device extends Action {
 
-	public Device() {
-		super();
-	}
-	public Device (String id, String date, String user, String pc, String action) {
-		super(id, date, user, pc, action);
-	}	
+public class Device extends AbstractSuper {
 	
+	private String activity;
+	
+	public Device(String activity) {
+		this.setActivity(activity);
+	}
+
+	public String getActivity() {
+		return activity;
+	}
+
+	public void setActivity(String activity) {
+		this.activity = activity;
+	}
+	
+	public void show() {
+		System.out.println(getActivity());
+	}
 }

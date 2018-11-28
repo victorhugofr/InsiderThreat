@@ -1,4 +1,5 @@
 package br.ufrn.imd.lp2.io;
+
 import java.util.ArrayList;
 
 public class Node {
@@ -18,11 +19,10 @@ public class Node {
     	setChilds(new ArrayList<Node>());
     }
     
-    /*
-    public void print() {
-    	System.out.println(getValue());
+    public void atualizaHist(String ts) {
+    	getHist()[Integer.parseInt(ts)]++;
     }
-    */
+    
 	public int[] getHist() {
 		return hist;
 	}
@@ -30,7 +30,6 @@ public class Node {
 	public void setHist(int hist[]) {
 		this.hist = hist;
 	}
-	
 	
 	public AbstractSuper getValue() {
 		return value;

@@ -1,16 +1,12 @@
 package br.ufrn.imd.lp2.io;
 
-import java.util.ArrayList;
-
 public class User extends AbstractSuper {
 	private String employee_name;
 	private String user_id;
 	private String domain;
 	private String email;
 	private String role;
-	
-	//private ArrayList<PC> pcs;
-	
+
 	public User() {
 		super();
 	}
@@ -21,7 +17,6 @@ public class User extends AbstractSuper {
 		this.domain = domain;
 		this.email = email;
 		this.role = role;
-		//pcs = new ArrayList<PC>();
 	}
 	
 	public String getName() {
@@ -51,9 +46,6 @@ public class User extends AbstractSuper {
 		System.out.println("Email: " + getEmail());
 		System.out.println("Função: " + getRole());
 	}
-	/*
-	public ArrayList<PC> getPcs(){
-		return pcs;
-	}
-	*/
+
 }
+
