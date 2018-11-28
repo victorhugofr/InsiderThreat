@@ -43,19 +43,39 @@ public class Tree {
 		// Para o PC
 		String pcId= le.getPc();
 		Node pcNode = getPcChild(dataNode, pcId);
-		SystemDate date = new SystemDate(le.getDate());
-		pcNode.atualizaHist(date.getHour());
+		//SystemDate date = new SystemDate(le.getDate());
+		pcNode.atualizaHist(dataFinal.getHour());
 		// Para as Actions
-		if(le instanceof DeviceLE) {
+		if(le instanceof LogonLE) {
+			LogonLE logonle = (LogonLE) le;
+			Node logonNode = getActionChild(pcNode, "Log");
+			//SystemDate logonDate = new SystemDate(le.getDate());
+			logonNode.atualizaHist(dataFinal.getHour());
+			
+			String login = logonle.getLogin();
+			Node loginNode = getLoginChild(logonNode, login);
+			//SystemDate loginDate = new SystemDate(le.getDate());
+			loginNode.atualizaHist(dataFinal.getHour());
+		} else if(le instanceof DeviceLE) {
 			DeviceLE devicele = (DeviceLE) le;
 			Node deviceNode = getActionChild(pcNode, "Device");
-			SystemDate deviceDate = new SystemDate(le.getDate());
-			deviceNode.atualizaHist(deviceDate.getHour());
+			//SystemDate deviceDate = new SystemDate(le.getDate());
+			deviceNode.atualizaHist(dataFinal.getHour());
 			
 			String connection = devicele.getConnection();
 			Node cntNode = getCntChild(deviceNode, connection);
-			SystemDate cntDate = new SystemDate(le.getDate());
-			cntNode.atualizaHist(cntDate.getHour());
+			//SystemDate cntDate = new SystemDate(le.getDate());
+			cntNode.atualizaHist(dataFinal.getHour());
+		} else if(le instanceof HttpLE) {
+			HttpLE httple = (HttpLE) le;
+			Node httpNode = getActionChild(pcNode, "Http");
+			//SystemDate httpDate = new SystemDate(le.getDate());
+			httpNode.atualizaHist(dataFinal.getHour());
+			
+			String url = httple.getUrl();
+			Node urlNode = getHttpChild(httpNode, url);
+			//SystemDate urlDate = new SystemDate(le.getDate());
+			urlNode.atualizaHist(dataFinal.getHour());
 		}
 	}
 	
@@ -130,6 +150,42 @@ public class Tree {
         if(result == null) {
         	result = new Node();
         	result.setValue(new Device(ts));
+        	children.add(result);
+        }
+        
+	 return result;
+	}
+	
+	public Node getLoginChild(Node loginNode, String ts) {
+		Node result = null;
+        ArrayList<Node> children = loginNode.getChilds();
+        for(Node current: children ) {
+        	Logon login = (Logon) current.getValue();
+        	if(login.getActivity().equals(ts)) {
+        		result = current;
+        	}
+        }
+        if(result == null) {
+        	result = new Node();
+        	result.setValue(new Logon(ts));
+        	children.add(result);
+        }
+        
+	 return result;
+	}
+	
+	public Node getHttpChild(Node httpNode, String ts) {
+		Node result = null;
+        ArrayList<Node> children = httpNode.getChilds();
+        for(Node current: children ) {
+        	HTTP site = (HTTP) current.getValue();
+        	if(site.getActivity().equals(ts)) {
+        		result = current;
+        	}
+        }
+        if(result == null) {
+        	result = new Node();
+        	result.setValue(new HTTP(ts));
         	children.add(result);
         }
         

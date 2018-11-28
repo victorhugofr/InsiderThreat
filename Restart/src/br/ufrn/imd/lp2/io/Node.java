@@ -58,4 +58,10 @@ public class Node {
     public Node getChildAt(int index) throws IndexOutOfBoundsException {
         return childs.get(index);
     }
+    
+    public void printHist() {
+    	for(int i = 0; i < 24; i++) {
+    		System.out.print(hist[i]+ " ");
+    	}
+    }
 }

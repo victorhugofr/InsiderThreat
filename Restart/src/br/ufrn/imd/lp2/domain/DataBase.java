@@ -22,6 +22,23 @@ public class DataBase {
 		return databaseSingleton;
 	}
 	
+	public int[] getHistMed() {
+		int histmedio[]=new int[24];
+		int aux[]=new int[24];
+		for(int i=0;i<users.size();i++) {
+			for(int j=0;j<24;j++) {
+			//	System.out.print(users.get(i).getRoot().getHist()[j]+" ");
+				aux[j]+=users.get(i).getRoot().getHist()[j];
+			//	System.out.println(aux[j]);
+			}
+			//System.out.println();
+		}
+		for (int i=0;i<24;i++) {
+			histmedio[i]=aux[i]/users.size();
+		}
+		return histmedio;
+	}
+	
 	public void addUsers(User employee) {
 			Node aux;
 			// VERIFICA SE JA EXISTE UMA ÁRVORE COM AQUELE USER
@@ -146,6 +163,16 @@ public class DataBase {
 		}
 	}
 	
+	public void seeHist(String user) {
+		for(Tree usuario: users) {
+			AbstractSuper aux = usuario.getRoot().getValue();
+			User u = (User) aux;
+			if(u.getId().equals(user)) {
+				usuario.getRoot().printHist();
+			}
+		}
+	}
+	
 	public void lerUser(String nomearquivo) {
 		Scanner leitor;
 		Reader arquivo = new Reader();
@@ -192,11 +219,15 @@ public class DataBase {
 				else if(nomearquivo.equals("http-completo.csv"))
 					de=new HttpLE(teste[0],teste[1],teste[2],teste[3],teste[4]);
 				
+				//SystemDate date = new SystemDate(de.getDate());
+				
 				for(int i = 0; i < users.size(); i++) {
 					AbstractSuper aux = users.get(i).getRoot().getValue();
 					User member = (User) aux;
 					if(member.getId().equals(de.getUser())) {
 						//System.out.println("Encontrou");
+						SystemDate date = new SystemDate(de.getDate());
+						users.get(i).getRoot().atualizaHist(date.getHour());
 						users.get(i).addLE(de);
 					}
 				}
