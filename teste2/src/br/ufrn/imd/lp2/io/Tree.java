@@ -140,7 +140,7 @@ public class Tree {
 						else {// SE NÃO TEM ATIVIDADE, ADICIONA NO PC
 							histaux[Integer.parseInt(teste.getHour())]++;
 							Node activity=new Node(teste);
-							Activity novaact= new Activity("device");
+							Activity novaact= new Activity("http");
 							
 							AbstractSuper newActivity = novaact;
 							Node act = new Node(newActivity);
@@ -203,7 +203,7 @@ public class Tree {
 						else {// SE NÃO TEM ATIVIDADE, ADICIONA NO PC
 							histaux[Integer.parseInt(teste.getHour())]++;
 							Node activity=new Node(teste);
-							Activity novaact= new Activity("device");
+							Activity novaact= new Activity("logon");
 							
 							AbstractSuper newActivity = novaact;
 							Node act = new Node(newActivity);
@@ -218,9 +218,13 @@ public class Tree {
 					histaux[Integer.parseInt(teste.getHour())]++;
 					Node activity=new Node(teste);
 					Action tmp = (Action) activity.getValue();
-					
-					Activity novaact= new Activity("device");
-					
+					Activity novaact;
+					if(teste instanceof Device)
+						novaact= new Activity("device");
+					else if(teste instanceof HTTP)
+						novaact= new Activity("http");
+					else 
+						novaact= new Activity("logon");
 					AbstractSuper newActivity = novaact;
 					Node act = new Node(newActivity);
 					activity.setHist(histaux);
@@ -239,8 +243,13 @@ public class Tree {
 				histaux[Integer.parseInt(teste.getHour())]++;
 				Node activity=new Node(teste);
 				Action tmp = (Action) activity.getValue();
-				
-				Activity novaact= new Activity("device");
+				Activity novaact;
+				if(teste instanceof Device)
+					novaact= new Activity("device");
+				else if(teste instanceof HTTP)
+					novaact= new Activity("http");
+				else 
+					novaact= new Activity("logon");
 				
 				AbstractSuper newActivity = novaact;
 				Node act = new Node(newActivity);
