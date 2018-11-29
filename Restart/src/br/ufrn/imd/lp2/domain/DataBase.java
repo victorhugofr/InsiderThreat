@@ -3,6 +3,7 @@ package br.ufrn.imd.lp2.domain;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Arrays;
 
 import br.ufrn.imd.lp2.io.*;
 
@@ -41,7 +42,7 @@ public class DataBase {
 	
 	public void addUsers(User employee) {
 			Node aux;
-			// VERIFICA SE JA EXISTE UMA ÁRVORE COM AQUELE USER
+			// VERIFICA SE JA EXISTE UMA Ãƒï¿½RVORE COM AQUELE USER
 			boolean existe= false;
 			for(int i=0;i<users.size();i++) {
 				aux=users.get(i).getUserChild(users.get(i).getRoot(), employee.getId()); 
@@ -229,11 +230,11 @@ public class DataBase {
 				teste = linha.split(",");
 				//teste= arquivo.quebrandoLinhas();
 				//System.out.println(teste[1]);
-				if(nomearquivo.equals("src/br/ufrn/imd/lp2/files/Device.csv"))
+				if(nomearquivo.equals("src/br/ufrn/imd/lp2/files/device.csv"))
 					de=new DeviceLE(teste[0],teste[1],teste[2],teste[3],teste[4]);
-				else if(nomearquivo.equals("src/br/ufrn/imd/lp2/files/logon-completo.csv"))
+				else if(nomearquivo.equals("src/br/ufrn/imd/lp2/files/logon.csv"))
 					de=new LogonLE(teste[0],teste[1],teste[2],teste[3],teste[4]);
-				else if(nomearquivo.equals("src/br/ufrn/imd/lp2/files/http-completo.csv"))
+				else if(nomearquivo.equals("src/br/ufrn/imd/lp2/files/http.csv"))
 					de=new HttpLE(teste[0],teste[1],teste[2],teste[3],teste[4]);
 				
 				//System.out.println(de.getDate());
@@ -258,46 +259,56 @@ public class DataBase {
 	
 	public void anomalie(String funcao) {
 		double dfinal[]  = new double[users.size()];
-		double media=0;
-		double dp=0;
-		double normal[];
+		int aux2=0;
 		for(int k = 0; k < users.size(); k++) {
 			AbstractSuper aux = users.get(k).getRoot().getValue();
 			User member = (User) aux;
 			if(member.getRole().equals(funcao)) {
-				//dfinal = new double[users.size()];
-				for(int j=0;j<users.size();j++) {
+				aux2++;
 					for(int i=0;i<24;i++) {
 						// Somatorio
-						dfinal[j]+=Math.pow(users.get(j).getRoot().getHist()[i]-getHistMed()[i], 2);
+						dfinal[k]+=Math.pow(users.get(k).getRoot().getHist()[i]-getHistMed()[i], 2);
 					}
 					
 					// Raiz do somatorio
-					dfinal[j]=Math.sqrt(dfinal[j]);
-				}
-				//System.out.println(Math.abs(dfinal[k]));
+					dfinal[k]=Math.sqrt(dfinal[k]);
 			}
 		}
-		
+		double normal[]=new double[aux2];
+		aux2=0;
 		for(int i=0;i<users.size();i++) {
-			media+=dfinal[i];
+			if(dfinal[i]!=0){
+				normal[aux2]=dfinal[i];
+				aux2++;
+			}
 		}
-			
-		media=media/users.size();
-			
-		for(int i=0;i<users.size();i++) {
-			dp+=Math.pow(dfinal[i]-media,2);
+		double mediana,q1,q3,interq,in1,in2;
+		Arrays.sort(normal);
+		if(aux2%2!=0) {
+			mediana=(normal[aux2/2]+normal[(aux2/2)+1])/2;
+			q1=(normal[aux2/4]+normal[(aux2/4)+1])/2;
+			q3=(normal[3*aux2/4]+normal[(3*aux2/4)+1])/2;
+		}else {
+			mediana=normal[aux2/2];
+			q1=normal[aux2/4];
+			q3=normal[3*aux2/4];
 		}
-			
-		dp=Math.sqrt(dp/users.size());
-			
-		normal = new double[users.size()];
+		interq=(q3-q1)*1.5;
+		in1=q3+interq;
+		in2=q1-interq;
+		User t1;
 		
-		
-		for(int i=0;i<users.size();i++) {
-			//	System.out.println(dfinal[i]);
-			//normal[i]=(dfinal[i]-media)/dp;
-			System.out.println(Math.abs(dfinal[i]));
+		for(int i=0;i<aux2;i++) {
+			if(normal[i]<in2 || normal[i]>in1) {
+				System.out.print("PEGUEI!!  ");
+				for(int z=0;z<users.size();z++) {
+					if(dfinal[z]==normal[i]) {
+						t1=(User)users.get(z).getRoot().getValue();
+						System.out.println("O USUARIO COM ID "+t1.getId() +" E COM NOME "+t1.getName()+"  ");
+					}
+				}
+			}
+			//System.out.println(Math.abs(normal[i]));
 		}
 		
 	}
