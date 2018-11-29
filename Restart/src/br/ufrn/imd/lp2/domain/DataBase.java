@@ -58,82 +58,6 @@ public class DataBase {
 			}
 	}
 	
-	public void checkUsers() {
-		for(int i = 0; i < users.size(); i++) {
-			AbstractSuper aux = users.get(i).getRoot().getValue();
-			if(aux instanceof User) {
-				User member = (User) aux;
-				member.show();
-			}
-		}
-	}
-	
-	public void checkDates() {
-		for(int i = 0; i < users.size(); i++) {
-			ArrayList<Node> dates = users.get(i).getRoot().getChilds();
-			if(dates.isEmpty()) {
-				System.out.println("Vazio");
-			} else {
-				for(Node act: dates) {
-					//AbstractSuper tmp = (AbstractSuper) act.getValue();
-					SystemDate aux = (SystemDate) act.getValue();
-					aux.show();
-				}
-			}
-		}
-	}
-	
-	public void checkPcs() {
-		for(int i = 0; i < users.size(); i++) {
-			ArrayList<Node> dates = users.get(i).getRoot().getChilds();
-			for(Node date: dates) {
-				ArrayList<Node> pcs = date.getChilds();
-				for(Node aux: pcs) {
-					PC pc = (PC) aux.getValue();
-					pc.show();
-				}
-			}
-				
-		}
-	}
-	
-	public void checkActions() {
-		for(int i = 0; i < users.size(); i++) {
-			ArrayList<Node> dates = users.get(i).getRoot().getChilds();
-			for(Node date: dates) {
-				ArrayList<Node> pcs = date.getChilds();
-				for(Node aux: pcs) {
-					ArrayList<Node> actions = aux.getChilds();
-					for(Node acts: actions) {
-						Action act = (Action) acts.getValue();
-						act.show();
-					}
-				}
-			}
-				
-		}
-	}
-	
-	public void checkDevices() {
-		for(int i = 0; i < users.size(); i++) {
-			ArrayList<Node> dates = users.get(i).getRoot().getChilds();
-			for(Node date: dates) {
-				ArrayList<Node> pcs = date.getChilds();
-				for(Node aux: pcs) {
-					ArrayList<Node> actions = aux.getChilds();
-					for(Node acts: actions) {
-						ArrayList<Node> devices = acts.getChilds();
-						for(Node device: devices) {
-							Device act = (Device) device.getValue();
-							act.show();
-						}
-					}
-				}
-			}
-				
-		}
-	}
-	
 	public void userInfo(String id) {
 		boolean existe = false;
 		for(int i = 0; i < users.size(); i++) {
@@ -209,6 +133,7 @@ public class DataBase {
 				
 				addUsers(de);	
 			}
+			leitor.close();
 		}catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -232,9 +157,9 @@ public class DataBase {
 				//System.out.println(teste[1]);
 				if(nomearquivo.equals("src/br/ufrn/imd/lp2/files/device.csv"))
 					de=new DeviceLE(teste[0],teste[1],teste[2],teste[3],teste[4]);
-				else if(nomearquivo.equals("src/br/ufrn/imd/lp2/files/logon.csv"))
+				else if(nomearquivo.equals("src/br/ufrn/imd/lp2/files/logon-completo.csv"))
 					de=new LogonLE(teste[0],teste[1],teste[2],teste[3],teste[4]);
-				else if(nomearquivo.equals("src/br/ufrn/imd/lp2/files/http.csv"))
+				else if(nomearquivo.equals("src/br/ufrn/imd/lp2/files/http-completo.csv"))
 					de=new HttpLE(teste[0],teste[1],teste[2],teste[3],teste[4]);
 				
 				//System.out.println(de.getDate());
@@ -252,6 +177,7 @@ public class DataBase {
 					}
 				}
 			}
+			leitor.close();
 		}catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -260,6 +186,7 @@ public class DataBase {
 	public void anomalie(String funcao) {
 		double dfinal[]  = new double[users.size()];
 		int aux2=0;
+		//boolean existe = false;
 		for(int k = 0; k < users.size(); k++) {
 			AbstractSuper aux = users.get(k).getRoot().getValue();
 			User member = (User) aux;
@@ -274,42 +201,46 @@ public class DataBase {
 					dfinal[k]=Math.sqrt(dfinal[k]);
 			}
 		}
-		double normal[]=new double[aux2];
-		aux2=0;
-		for(int i=0;i<users.size();i++) {
-			if(dfinal[i]!=0){
-				normal[aux2]=dfinal[i];
-				aux2++;
-			}
-		}
-		double mediana,q1,q3,interq,in1,in2;
-		Arrays.sort(normal);
-		if(aux2%2!=0) {
-			mediana=(normal[aux2/2]+normal[(aux2/2)+1])/2;
-			q1=(normal[aux2/4]+normal[(aux2/4)+1])/2;
-			q3=(normal[3*aux2/4]+normal[(3*aux2/4)+1])/2;
-		}else {
-			mediana=normal[aux2/2];
-			q1=normal[aux2/4];
-			q3=normal[3*aux2/4];
-		}
-		interq=(q3-q1)*1.5;
-		in1=q3+interq;
-		in2=q1-interq;
-		User t1;
-		
-		for(int i=0;i<aux2;i++) {
-			if(normal[i]<in2 || normal[i]>in1) {
-				System.out.print("PEGUEI!!  ");
-				for(int z=0;z<users.size();z++) {
-					if(dfinal[z]==normal[i]) {
-						t1=(User)users.get(z).getRoot().getValue();
-						System.out.println("O USUARIO COM ID "+t1.getId() +" E COM NOME "+t1.getName()+"  ");
-					}
+		if(aux2 == 0) {
+			System.out.println("Cargo não existente ou inválido");
+		} else {
+			double normal[]=new double[aux2];
+			aux2=0;
+			for(int i=0;i<users.size();i++) {
+				if(dfinal[i]!=0){
+					normal[aux2]=dfinal[i];
+					aux2++;
 				}
 			}
-			//System.out.println(Math.abs(normal[i]));
+			double mediana,q1,q3,interq,in1,in2;
+			Arrays.sort(normal);
+			if(aux2%2!=0) {
+				mediana=(normal[aux2/2]+normal[(aux2/2)+1])/2;
+				q1=(normal[aux2/4]+normal[(aux2/4)+1])/2;
+				q3=(normal[3*aux2/4]+normal[(3*aux2/4)+1])/2;
+			}else {
+				mediana=normal[aux2/2];
+				q1=normal[aux2/4];
+				q3=normal[3*aux2/4];
+			}
+			interq=(q3-q1)*1.5;
+			in1=q3+interq;
+			in2=q1-interq;
+			User t1;
+			
+			for(int i=0;i<aux2;i++) {
+				if(normal[i]<in2 || normal[i]>in1) {
+					System.out.print("PEGUEI!!  ");
+					for(int z=0;z<users.size();z++) {
+						if(dfinal[z]==normal[i]) {
+							t1=(User)users.get(z).getRoot().getValue();
+							System.out.println("O USUARIO COM ID "+t1.getId() +" E COM NOME "+t1.getName()+"  ");
+						}
+					}
+				}
+				//System.out.println(Math.abs(normal[i]));
+			}
 		}
-		
+				
 	}
 }

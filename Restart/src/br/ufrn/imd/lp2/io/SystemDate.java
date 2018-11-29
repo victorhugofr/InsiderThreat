@@ -1,11 +1,5 @@
 package br.ufrn.imd.lp2.io;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.text.DateFormat;
-import java.util.Calendar;
-import java.text.ParseException;
-
 public class SystemDate extends AbstractSuper {
 	
 	/*
@@ -35,28 +29,6 @@ public class SystemDate extends AbstractSuper {
 		horas = data.substring(11, 13);
 	}
 	
-	/*
-	public String getDate() {
-		return date;
-	}
-	
-	public void setDate(String date){
-		this.date = date;
-	}
-	
-	public String getDay() {
-		return df.format(date).substring(0,10);
-	}
-	
-	public String getHour() {
-		String ts = df.format(date).substring(11, 13);
-		return ts;
-	}
-	
-	public void show() {
-		System.out.println(getDay());
-	}
-	*/
 	public String getDate() {
 		return dia;
 	}
@@ -74,7 +46,6 @@ public class SystemDate extends AbstractSuper {
 	}
 	
 	public String getHour() {
-		//String ts = df.format(date).substring(11, 13);
 		return horas;
 	}
 	

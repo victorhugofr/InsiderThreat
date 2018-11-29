@@ -16,12 +16,12 @@ public class Main {
 		DataBase db = new DataBase();
 
 		System.out.println("----  Lendo Usuários  ----");
-		db.lerUser("src/teste/ldap.csv");
+		db.lerUser("src/br/ufrn/imd/lp2/files/ldap.csv");
 		System.out.println("---- Usuários finalizados ----");
 		System.out.println("");
 		
 		System.out.println("----  Lendo Devices  ----");
-		db.ler("src/br/ufrn/imd/lp2/files/Device.csv");
+		db.ler("src/br/ufrn/imd/lp2/files/device.csv");
 		System.out.println("---- Devices finalizados ----");
 		System.out.println("");
 		
@@ -68,45 +68,7 @@ public class Main {
 					break;
 			}
 		}
-		//db.seeHist("RES0962");
-		//db.userInfo("RES0962");
-		//db.anomalie("Administrative Assistant");
-		//	histnormal=db.getHistNormal();
-		/// Vetor de double do tamanho da quantidade de usuários
-		/*
-		dfinal = new double[db.users.size()];
-		for(int j=0;j<db.users.size();j++) {
-			for(int i=0;i<24;i++) {
-				// Somatorio
-				dfinal[j]+=Math.pow(db.users.get(j).getRoot().getHist()[i]-db.getHistMed()[i], 2);
-			}
-			
-			// Raiz do somatorio
-			dfinal[j]=Math.sqrt(dfinal[j]);
-			//System.out.print(dfinal[j] + " ");
-		}
-		*/
-		/*
-		for(int i=0;i<db.users.size();i++) {
-			media+=dfinal[i];
-		}
-			
-		media=media/db.users.size();
-			
-		for(int i=0;i<db.users.size();i++) {
-			dp+=Math.pow(dfinal[i]-media,2);
-		}
-			
-		dp=Math.sqrt(dp/db.users.size());
-			
-		normal = new double[db.users.size()];
-		*/
-		/*
-		for(int i=0;i<db.users.size();i++) {
-			//	System.out.println(dfinal[i]);
-			//normal[i]=(dfinal[i]-media)/dp;
-			System.out.println(Math.abs(dfinal[i])+" ");
-		}
-		*/
+		leitor.close();
+		
 	}
 }
