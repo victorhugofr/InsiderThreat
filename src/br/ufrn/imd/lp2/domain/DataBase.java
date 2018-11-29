@@ -10,16 +10,13 @@ import br.ufrn.imd.lp2.io.*;
 public class DataBase {
 	public ArrayList<Tree>users;
 
-	public static DataBase databaseSingleton;
+	public static final DataBase databaseSingleton = new DataBase();
 	
-	public DataBase() {
+	private DataBase() {
 		users = new ArrayList<Tree>();
 	}
 	
 	public static DataBase getInstance() {
-		if (databaseSingleton == null) {
-			databaseSingleton = new DataBase();
-		}
 		return databaseSingleton;
 	}
 	
@@ -28,11 +25,8 @@ public class DataBase {
 		int aux[]=new int[24];
 		for(int i=0;i<users.size();i++) {
 			for(int j=0;j<24;j++) {
-			//	System.out.print(users.get(i).getRoot().getHist()[j]+" ");
 				aux[j]+=users.get(i).getRoot().getHist()[j];
-			//	System.out.println(aux[j]);
 			}
-			//System.out.println();
 		}
 		for (int i=0;i<24;i++) {
 			histmedio[i]=aux[i]/users.size();
@@ -41,63 +35,61 @@ public class DataBase {
 	}
 	
 	public void addUsers(User employee) {
-			Node aux;
-			// VERIFICA SE JA EXISTE UMA Ã�RVORE COM AQUELE USER
-			boolean existe= false;
-			for(int i=0;i<users.size();i++) {
-				aux=users.get(i).getUserChild(users.get(i).getRoot(), employee.getId()); 
-				if(aux!=null) {//procura usuario
-					existe=true;
-				}
+		Node aux;
+		boolean existe= false;
+		for(int i=0;i<users.size();i++) {
+			aux=users.get(i).getUserChild(users.get(i).getRoot(), employee.getId()); 
+			if(aux!=null) {
+				existe=true;
 			}
+		}
 			
-			if(existe==false) {
-				Node userRoot = new Node(employee);
-				Tree tree = new Tree(userRoot);
-				users.add(tree);
-			}
+		if(existe==false) {
+			Node userRoot = new Node(employee);
+			Tree tree = new Tree(userRoot);
+			users.add(tree);
+		}
 	}
 	
 	public void userInfo(String id) {
 		boolean existe = false;
 		for(int i = 0; i < users.size(); i++) {
 			AbstractSuper aux = users.get(i).getRoot().getValue();
-				User member = (User) aux;
-				if(member.getId().equals(id)) {
-					existe = true;
-					member.show();
-					ArrayList<Node> dates = users.get(i).getRoot().getChilds();
-					for(Node date: dates) {
-						SystemDate data = (SystemDate) date.getValue();
-						data.show();
-						ArrayList<Node> pcs = date.getChilds();
-						for(Node pc: pcs) {
-							PC computer = (PC) pc.getValue();
-							computer.show();
-							ArrayList<Node> acts = pc.getChilds();
-							for(Node act: acts) {
-								Action action = (Action) act.getValue();
-								action.show();
-								ArrayList<Node> activities = act.getChilds();
-								for(Node end: activities) {
-									if(end.getValue() instanceof Device) {
-										Device dvc = (Device) end.getValue();
-										dvc.show();
-									}
-									
-									if(end.getValue() instanceof HTTP) {
-										HTTP site = (HTTP) end.getValue();
-										site.show();
-									}
-									if(end.getValue() instanceof Logon) {
-										Logon site = (Logon) end.getValue();
-										site.show();
-									}
+			User member = (User) aux;
+			if(member.getId().equals(id)) {
+				existe = true;
+				member.show();
+				ArrayList<Node> dates = users.get(i).getRoot().getChilds();
+				for(Node date: dates) {
+					SystemDate data = (SystemDate) date.getValue();
+					data.show();
+					ArrayList<Node> pcs = date.getChilds();
+					for(Node pc: pcs) {
+						PC computer = (PC) pc.getValue();
+						computer.show();
+						ArrayList<Node> acts = pc.getChilds();
+						for(Node act: acts) {
+							Action action = (Action) act.getValue();
+							action.show();
+							ArrayList<Node> activities = act.getChilds();
+							for(Node end: activities) {
+								if(end.getValue() instanceof Device) {
+									Device dvc = (Device) end.getValue();
+									dvc.show();
+								}
+								else if(end.getValue() instanceof HTTP) {
+									HTTP site = (HTTP) end.getValue();
+									site.show();
+								}
+								else if(end.getValue() instanceof Logon) {
+									Logon site = (Logon) end.getValue();
+									site.show();
 								}
 							}
 						}
 					}
 				}
+			}
 		}
 		if(existe == false) {
 			System.out.println("ID invalido");
@@ -118,7 +110,6 @@ public class DataBase {
 		Scanner leitor;
 		Reader arquivo = new Reader();
 		String[] teste;
-		//AbstractSuper de = new AbstractSuper();
 		try {
 			leitor = new Scanner(arquivo.leitura(nomearquivo));	
 			String linha = new String();
@@ -126,8 +117,7 @@ public class DataBase {
 			
 			while(leitor.hasNext()){
 				linha = leitor.nextLine();
-				arquivo.setValoresEntreVirgulas(linha);
-				teste= arquivo.quebrandoLinhas();
+				teste = linha.split(",");
 				
 				User de=new User(teste[0],teste[1],teste[2],teste[3],teste[4]);
 				
@@ -151,26 +141,21 @@ public class DataBase {
 			
 			while(leitor.hasNext()){
 				linha = leitor.nextLine();
-				//arquivo.setValoresEntreVirgulas(linha);
 				teste = linha.split(",");
-				//teste= arquivo.quebrandoLinhas();
-				//System.out.println(teste[1]);
+				
 				if(nomearquivo.equals("src/br/ufrn/imd/lp2/files/device.csv"))
 					de=new DeviceLE(teste[0],teste[1],teste[2],teste[3],teste[4]);
-				else if(nomearquivo.equals("src/br/ufrn/imd/lp2/files/logon-completo.csv"))
+				else if(nomearquivo.equals("src/br/ufrn/imd/lp2/files/logon.csv"))
 					de=new LogonLE(teste[0],teste[1],teste[2],teste[3],teste[4]);
-				else if(nomearquivo.equals("src/br/ufrn/imd/lp2/files/http-completo.csv"))
+				else if(nomearquivo.equals("src/br/ufrn/imd/lp2/files/http.csv"))
 					de=new HttpLE(teste[0],teste[1],teste[2],teste[3],teste[4]);
 				
-				//System.out.println(de.getDate());
 				SystemDate date = new SystemDate(de.getDate());
 				
 				for(int i = 0; i < users.size(); i++) {
 					AbstractSuper aux = users.get(i).getRoot().getValue();
 					User member = (User) aux;
 					if(member.getId().equals(de.getUser())) {
-						//System.out.println("Encontrou");
-						//SystemDate date = new SystemDate(de.getDate());
 						users.get(i).getRoot().atualizaHist(date.getHour());
 						users.get(i).addLE(de, date.getHour());
 						break;
@@ -186,19 +171,18 @@ public class DataBase {
 	public void anomalie(String funcao) {
 		double dfinal[]  = new double[users.size()];
 		int aux2=0;
-		//boolean existe = false;
 		for(int k = 0; k < users.size(); k++) {
 			AbstractSuper aux = users.get(k).getRoot().getValue();
 			User member = (User) aux;
 			if(member.getRole().equals(funcao)) {
 				aux2++;
-					for(int i=0;i<24;i++) {
-						// Somatorio
-						dfinal[k]+=Math.pow(users.get(k).getRoot().getHist()[i]-getHistMed()[i], 2);
-					}
+				for(int i=0;i<24;i++) {
+					// Somatorio
+					dfinal[k]+=Math.pow(users.get(k).getRoot().getHist()[i]-getHistMed()[i], 2);
+				}
 					
-					// Raiz do somatorio
-					dfinal[k]=Math.sqrt(dfinal[k]);
+				// Raiz do somatorio
+				dfinal[k]=Math.sqrt(dfinal[k]);
 			}
 		}
 		if(aux2 == 0) {
@@ -238,7 +222,6 @@ public class DataBase {
 						}
 					}
 				}
-				//System.out.println(Math.abs(normal[i]));
 			}
 		}
 				

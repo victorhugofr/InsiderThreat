@@ -20,14 +20,14 @@ public class Tree {
 	
 	public Node getUserChild(Node currentNode, String dataToFind) {
 		 Node returnNode = null;
-	        AbstractSuper aux = currentNode.getValue();
+		 AbstractSuper aux = currentNode.getValue();
 	        
-	        if(aux instanceof User) {
-	        	User member = (User) aux;
-		        if (member.getId().equals(dataToFind)) {
-		            returnNode = currentNode;
-		        }
-	        } 
+		 if(aux instanceof User) {
+			 User member = (User) aux;
+			 if (member.getId().equals(dataToFind)) {
+				 returnNode = currentNode;
+			 }
+		 } 
 	        
 		 return returnNode;
 	 }
@@ -58,7 +58,7 @@ public class Tree {
 			deviceNode.atualizaHist(hist);
 			
 			String connection = devicele.getConnection();
-			Node cntNode = getCntChild(deviceNode, connection);
+			Node cntNode = getDvcChild(deviceNode, connection);
 			cntNode.atualizaHist(hist);
 		} else if(le instanceof HttpLE) {
 			HttpLE httple = (HttpLE) le;
@@ -89,7 +89,7 @@ public class Tree {
         	children.add(result);
         }
         
-	 return result;
+        return result;
 	}
 	
 	
@@ -109,7 +109,7 @@ public class Tree {
         	children.add(result);
         }
         
-	 return result;
+        return result;
 	}
 	
 	public Node getActionChild(Node pcNode, String ts) {
@@ -129,10 +129,10 @@ public class Tree {
         	children.add(result);
         }
         
-	 return result;
+        return result;
 	}
 	
-	public Node getCntChild(Node deviceNode, String ts) {
+	public Node getDvcChild(Node deviceNode, String ts) {
 		Node result = null;
         ArrayList<Node> children = deviceNode.getChilds();
         for(Node current: children ) {
@@ -148,7 +148,7 @@ public class Tree {
         	children.add(result);
         }
         
-	 return result;
+        return result;
 	}
 	
 	public Node getLoginChild(Node loginNode, String ts) {
@@ -167,7 +167,7 @@ public class Tree {
         	children.add(result);
         }
         
-	 return result;
+        return result;
 	}
 	
 	public Node getHttpChild(Node httpNode, String ts) {
@@ -186,7 +186,7 @@ public class Tree {
         	children.add(result);
         }
         
-	 return result;
+        return result;
 	}
 }
 

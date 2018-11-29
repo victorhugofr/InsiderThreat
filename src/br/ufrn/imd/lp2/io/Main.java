@@ -6,40 +6,30 @@ import java.util.Scanner;
 public class Main {
 
 	public static void main(String[] args) {
-		/* 
-		double dfinal[];
-		double media=0;
-		double dp=0;
-		double normal[];
-		*/
-		System.out.println("AGUARDE A LEITURA DOS ARQUIVOS");
-		DataBase db = new DataBase();
-
+	
+		System.out.println("AGUARDE A LEITURA DOS ARQUIVOS /n");
+		DataBase db = DataBase.databaseSingleton;
+		
 		System.out.println("----  Lendo Usuários  ----");
 		db.lerUser("src/br/ufrn/imd/lp2/files/ldap.csv");
-		System.out.println("---- Usuários finalizados ----");
-		System.out.println("");
+		System.out.println("---- Usuários finalizados ---- \n");
 		
 		System.out.println("----  Lendo Devices  ----");
 		db.ler("src/br/ufrn/imd/lp2/files/device.csv");
-		System.out.println("---- Devices finalizados ----");
-		System.out.println("");
+		System.out.println("---- Devices finalizados ----\n");
 		
 		System.out.println("----  Lendo Logons  ----");
-		db.ler("src/br/ufrn/imd/lp2/files/logon-completo.csv");
-		System.out.println("---- Logons finalizados ----");
-		System.out.println("");
-		
+		db.ler("src/br/ufrn/imd/lp2/files/logon.csv");
+		System.out.println("---- Logons finalizados ----\n");
 		
 		System.out.println("----  Lendo Https  ----");
-		db.ler("src/br/ufrn/imd/lp2/files/http-completo.csv");
-		System.out.println("---- Https finalizados ----");
-		System.out.println("");
+		db.ler("src/br/ufrn/imd/lp2/files/http.csv");
+		System.out.println("---- Https finalizados ----\n");
 		
 		int option = 1;
 		Scanner leitor = new Scanner(System.in);
 		String input;
-		//int teste;
+		
 		while(option != 0) {
 			System.out.println("\nBEM VINDO AO INSIDER THREAT");
 			System.out.println("");
@@ -54,7 +44,6 @@ public class Main {
 					System.out.println("----- BUSCA POR USUARIO -----");
 					System.out.println("Insira o ID de um usuario: ");
 					input = leitor.nextLine();
-					//teste = leitor.nextInt();
 					System.out.println("Resultado: ");
 					db.userInfo(input);
 					break;
@@ -69,6 +58,7 @@ public class Main {
 			}
 		}
 		leitor.close();
-		
+		System.out.println("Até mais!!");
 	}
+
 }
