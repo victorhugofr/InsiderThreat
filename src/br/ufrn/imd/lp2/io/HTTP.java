@@ -1,8 +1,8 @@
 package br.ufrn.imd.lp2.io;
 /**
- * Classe que armazena os tipos de ações da atividade HTTP,
+ * Classe que armazena os tipos de acoes da atividade HTTP,
  * que podem conter endereços acessados pelo usuario
- * @author Gabriel Igor and Victor Hugo
+ * @author Gabriel Igor e Victor Hugo
  * @version 2018.29.11
  */
 public class HTTP extends AbstractSuper {
@@ -18,21 +18,21 @@ public class HTTP extends AbstractSuper {
 	}
 
 	/**
-	 * Método para retornar atividade do HTTP
+	 * Metodo para retornar atividade do HTTP
 	 * @return Url do site acessado
 	 */
 	public String getActivity() {
 		return url;
 	}
 	/**
-	 * Método para mudar o tipo de atividade de HTTP
+	 * Metodo para mudar o tipo de atividade de HTTP
 	 * @param activity Site acessado
 	 */
 	public void setActivity(String activity) {
 		this.url = activity;
 	}
 	/**
-	 * Imprime a ação de conexão ou desconexão de um pendrive
+	 * Imprime a ação de conexao ou desconexao de um pendrive
 	 */
 	public void show() {
 		System.out.println(getActivity());

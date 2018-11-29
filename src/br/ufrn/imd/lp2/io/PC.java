@@ -1,7 +1,7 @@
 package br.ufrn.imd.lp2.io;
 /**
  * Classe que armazena o computador acessado pelo nó
- * @author Gabriel Igor and Victor Hugo
+ * @author Gabriel Igor e Victor Hugo
  * @version 2018.29.11
  */
 public class PC extends AbstractSuper{
@@ -15,7 +15,7 @@ public class PC extends AbstractSuper{
 		this.pcId = pcId;
 	}
 	/**
-	 * Método para retornar o identificador do computador
+	 * Metodo para retornar o identificador do computador
 	 * @return Identificador do computador
 	 */
 	public String getPcId() {

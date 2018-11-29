@@ -3,6 +3,11 @@ package br.ufrn.imd.lp2.io;
 import br.ufrn.imd.lp2.domain.DataBase;
 import java.util.Scanner;
 
+/**
+ * Classe principal
+ * @author Gabriel Igor e Victor Hugo
+ * @version 2018.29.11
+ */
 public class Main {
 
 	public static void main(String[] args) {
@@ -57,11 +62,11 @@ public class Main {
 					db.anomalie(input);
 					break;
 				case 3:
-					System.out.println("----- BUSCA POR AMEAÇA POR CARGO -----");
+					System.out.println("----- BUSCA POR HISTOGRAMA -----");
 					System.out.println("Insira o ID de um usuario: ");
 					input = leitor.nextLine();
 					System.out.println("Resultado: ");
-					db.userInfo(input);
+					db.seeHist(input);
 			}
 		}
 		leitor.close();

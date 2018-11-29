@@ -2,20 +2,20 @@ package br.ufrn.imd.lp2.io;
 
 /**
  * Classe usada para armazenar linhas do arquivo device.csv
- * @author Gabriel Igor and Victor Hugo
+ * @author Gabriel Igor e Victor Hugo
  * @version 2018.29.11
  */
 public class DeviceLE extends LogEntry{
-	// Atividade de conexão ou desconexão de um pendrive
+	// Atividade de conexao ou desconexao de um pendrive
 	private String connection;
 	
 	/**
 	 * Construtor do objeto DeviceLE
-	 * @param id ID da ação executada
-	 * @param date Data da ação
-	 * @param user ID do usuário
-	 * @param pc Dispositivo que foi usado pelo usuário
-	 * @param connection Ação de conexão ou desconexão de um pendrive
+	 * @param id ID da acao executada
+	 * @param date Data da acao
+	 * @param user ID do usuario
+	 * @param pc Dispositivo que foi usado pelo usuario
+	 * @param connection Ação de conexao ou desconexao de um pendrive
 	 */
 	public DeviceLE(String id, String date, String user, String pc, String connection) {
 		super(id, date, user, pc);
@@ -23,8 +23,8 @@ public class DeviceLE extends LogEntry{
 	}
 
 	/**
-	 * Retorna a atividade de conexão ou desconexão de um pendrive
-	 * @return Atividade do usuário com o pendrive
+	 * Retorna a atividade de conexao ou desconexao de um pendrive
+	 * @return Atividade do usuario com o pendrive
 	 */
 	public String getConnection() {
 		return connection;
@@ -32,7 +32,7 @@ public class DeviceLE extends LogEntry{
 
 	/**
 	 * Muda o tipo da atividade com o pendrive
-	 * @param connection Atividade de conexão ou desconexão do pendrive
+	 * @param connection Atividade de conexao ou desconexao do pendrive
 	 */
 	public void setConnection(String connection) {
 		this.connection = connection;

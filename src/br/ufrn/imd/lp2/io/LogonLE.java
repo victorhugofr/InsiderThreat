@@ -27,7 +27,7 @@ public class LogonLE extends LogEntry{
 	}
 	/**
 	 * Muda a ação de login 
-	 * @param url Ação de login(logon ou logoff)
+	 * @param login Ação de login(logon ou logoff)
 	 */
 	public void setLogin(String login) {
 		this.login = login;

@@ -8,38 +8,39 @@ import java.util.Arrays;
 import br.ufrn.imd.lp2.io.*;
 
 /**
- * Classe que armazena todos os dados dos usuários, armazenando uma lista
- * de árvores de usuários
- * @author Gabriel Igor and Victor Hugo
+ * Classe que armazena todos os dados dos usuarios, armazenando uma lista
+ * de arvores de usuarios
+ * @author Gabriel Igor e Victor Hugo
  * @version 2018.29.11
  */
 
 public class DataBase {
-	// Lista de árvores de usuários
+	// Lista de arvores de usuarios
 	public ArrayList<Tree>users;
 
 	// DataBase Singleton
 	public static final DataBase databaseSingleton = new DataBase();
 	
     /**
-     * Cria um objeto DataBase único, já que o projeto foi implementado
-     * usando-se o padrão de projeto Singleton
+     * Cria um objeto DataBase unico ja que o projeto foi implementado
+     * usando-se o padrao de projeto Singleton
      */
 	private DataBase() {
 		users = new ArrayList<Tree>();
 	}
 	
     /**
-     * Método estático que garante que só existe um único objeto DataBase
+     * Metodo estatico que garante que existe um unico objeto DataBase
+     * @return DataBase unica criada
      */
 	public static DataBase getInstance() {
 		return databaseSingleton;
 	}
 	
 	/**
-	 * Calcula o histograma média dos usuários daquela funcao
+	 * Calcula o histograma media dos usuarios daquela funcao
 	 * @param funcao Funcao dos usuarios a serem analisados
-	 * @return O histograma média dos usuários
+	 * @return O histograma media dos usuarios
 	 */
 	public int[] getHistMed(String funcao) {
 		int histmedio[]=new int[24];
@@ -60,8 +61,8 @@ public class DataBase {
 	}
 	
 	/**
-	 * Adiciona usuários na base de dados
-	 * @param employee Usuário a ser adicionado na base de dados
+	 * Adiciona usuarios na base de dados
+	 * @param employee Usuario a ser adicionado na base de dados
 	 */
 	public void addUsers(User employee) {
 		Node aux;
@@ -81,8 +82,8 @@ public class DataBase {
 	}
 	
 	/**
-	 * Imprime a árvore de usuário
-	 * @param id Usuário cujas informações deseja-se ver
+	 * Imprime a Arvore de usuario
+	 * @param id Usuario cujas informacoes deseja-se ver
 	 */
 	public void userInfo(String id) {
 		boolean existe = false;
@@ -130,8 +131,8 @@ public class DataBase {
 	}
 	
 	/**
-	 * Permite visualizar o histograma de um usuário
-	 * @param user Usuário o qual deseja-se ver o histograma
+	 * Permite visualizar o histograma de um usuario
+	 * @param user Usuario o qual deseja-se ver o histograma
 	 */
 	public void seeHist(String user) {
 		boolean valido = false;
@@ -149,8 +150,8 @@ public class DataBase {
 	}
 	
 	/**
-	 * Método para ler o arquivo contendo os usuários sem valores duplicados
-	 * @param nomearquivo Nome do arquivo contendo a lista de usuários
+	 * Metodo para ler o arquivo contendo os usuarios sem valores duplicados
+	 * @param nomearquivo Nome do arquivo contendo a lista de usuarios
 	 */
 	public void lerUser(String nomearquivo) {
 		Scanner leitor;
@@ -176,7 +177,7 @@ public class DataBase {
 	}
 	
 	/**
-	 * Método para ler o arquivo de atividades do usuários
+	 * Metodo para ler o arquivo de atividades dos usuarios
 	 * @param nomearquivo Nome do arquivo contendo as atividades
 	 */
 	public void ler(String nomearquivo) {
@@ -219,7 +220,7 @@ public class DataBase {
 	}
 	
 	/**
-	 * Verifica os usuários de mesma função que têm comportamento suspeito
+	 * Verifica os usuarios de mesma funcao que tem comportamento suspeito
 	 * @param funcao Funcao dos usuarios a serem analisados
 	 */
 	public void anomalie(String funcao) {
@@ -283,4 +284,4 @@ public class DataBase {
 				
 	}
 }
-}
+

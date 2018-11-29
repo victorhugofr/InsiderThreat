@@ -2,22 +2,45 @@ package br.ufrn.imd.lp2.io;
 
 import java.util.ArrayList;
 
+/**
+ * Classe que representa a estrutura de arvore
+ * @author Gabriel Igor e Victor Hugo
+ * @version 2018.29.11
+ */
 public class Tree {
+	// No raiz da arvore, equivalente ao usuario
 	private Node root;
 	
+	/**
+	 * Construtor da arvore
+	 * @param root Nova raiz da arvore, ou seja, novo usuario
+	 */
 	public Tree(Node root) {
 		this.root = root;
 	}
 	
+	/**
+	 * Muda a raiz(Muda o usuario) 
+	 * @param root Nova raiz
+	 */
 	public void setRoot(Node root) {
 		this.root=root;
 	}
 	
+	/**
+	 * Retorna a raiz da arvore (retorna o usuario)
+	 * @return Raiz da arvore
+	 */
 	public Node getRoot() {
 		return root;
 	}
 	
-	
+	/**
+	 * Metodo para gerar novo nó de usuario
+	 * @param currentNode No de usuario
+	 * @param dataToFind Id do usuario
+	 * @return No de usuario
+	 */
 	public Node getUserChild(Node currentNode, String dataToFind) {
 		 Node returnNode = null;
 		 AbstractSuper aux = currentNode.getValue();
@@ -32,6 +55,12 @@ public class Tree {
 		 return returnNode;
 	 }
 	
+	/**
+	 * Metodo para construir o perfil de usuario, ou seja,
+	 * para construir toda a arvore de dados do usuario
+	 * @param le Objeto LogEntry, contendo as informacoes da linha do arquivo lido
+	 * @param hist Data da acao usada para atualizar os histogramas de cada nó
+	 */
 	public void addLE(LogEntry le, String hist) {
 		// Para a Data
 		
@@ -71,6 +100,13 @@ public class Tree {
 		}
 	}
 	
+	/**
+	 * Metodo que checa se ja existe um nó para aquela data
+	 * Em caso afirmativo, retorna o nó ja existente
+	 * Em caso negativo, cria um novo nó e o retorna
+	 * @param ts Data usada para comparacao
+	 * @return Nó de data
+	 */
 	public Node getDateChild(String ts) {
 		Node result = null;
         Node userNode = getRoot();
@@ -92,7 +128,14 @@ public class Tree {
         return result;
 	}
 	
-	
+	/**
+	 * Metodo que checa se ja existe um nó para aquele dispositivo
+	 * Em caso afirmativo, retorna o nó ja existente
+	 * Em caso negativo, cria um novo nó e o retorna
+	 * @param dateNode No de data pai de dispositivos
+	 * @param ts Dispositivo usada para comparacao
+	 * @return Nó do dispositivo
+	 */
 	public Node getPcChild(Node dateNode, String ts) {
 		Node result = null;
         ArrayList<Node> children = dateNode.getChilds();
@@ -112,6 +155,14 @@ public class Tree {
         return result;
 	}
 	
+	/**
+	 * Metodo que checa se ja existe um nó para aquele tipo de acao
+	 * Em caso afirmativo, retorna o nó ja existente
+	 * Em caso negativo, cria um novo nó e o retorna
+	 * @param pcNode No de dispositivo pai tipos de acoes
+	 * @param ts Tipo de acao usada para comparacao
+	 * @return Nó do tipo de acao
+	 */
 	public Node getActionChild(Node pcNode, String ts) {
 		Node result = null;
         ArrayList<Node> children = pcNode.getChilds();
@@ -132,6 +183,14 @@ public class Tree {
         return result;
 	}
 	
+	/**
+	 * Metodo que checa se ja existe um nó para aquela atividade de Device
+	 * Em caso afirmativo, retorna o nó ja existente
+	 * Em caso negativo, cria um novo nó e o retorna
+	 * @param deviceNode No de tipo de acao Device
+	 * @param ts Atividade de Device usada para comparacao
+	 * @return Nó da atividade do tipo Device
+	 */
 	public Node getDvcChild(Node deviceNode, String ts) {
 		Node result = null;
         ArrayList<Node> children = deviceNode.getChilds();
@@ -151,6 +210,14 @@ public class Tree {
         return result;
 	}
 	
+	/**
+	 * Metodo que checa se ja existe um nó para aquela atividade de Logon
+	 * Em caso afirmativo, retorna o nó ja existente
+	 * Em caso negativo, cria um novo nó e o retorna
+	 * @param loginNode No de tipo de acao Logon
+	 * @param ts Atividade de Logon usada para comparacao
+	 * @return Nó da atividade do tipo Logon
+	 */
 	public Node getLoginChild(Node loginNode, String ts) {
 		Node result = null;
         ArrayList<Node> children = loginNode.getChilds();
@@ -170,6 +237,14 @@ public class Tree {
         return result;
 	}
 	
+	/**
+	 * Metodo que checa se ja existe um nó para aquela URL
+	 * Em caso afirmativo, retorna o nó ja existente
+	 * Em caso negativo, cria um novo nó e o retorna
+	 * @param httpNode No de tipo de acao Http
+	 * @param ts URL usada para comparacao
+	 * @return Nó da URL
+	 */
 	public Node getHttpChild(Node httpNode, String ts) {
 		Node result = null;
         ArrayList<Node> children = httpNode.getChilds();
