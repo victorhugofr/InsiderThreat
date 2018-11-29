@@ -7,19 +7,39 @@ import java.util.Arrays;
 
 import br.ufrn.imd.lp2.io.*;
 
+/**
+ * Classe que armazena todos os dados dos usuários, armazenando uma lista
+ * de árvores de usuários
+ * @author Gabriel Igor and Victor Hugo
+ * @version 2018.29.11
+ */
+
 public class DataBase {
+	// Lista de árvores de usuários
 	public ArrayList<Tree>users;
 
+	// DataBase Singleton
 	public static final DataBase databaseSingleton = new DataBase();
 	
+    /**
+     * Cria um objeto DataBase único, já que o projeto foi implementado
+     * usando-se o padrão de projeto Singleton
+     */
 	private DataBase() {
 		users = new ArrayList<Tree>();
 	}
 	
+    /**
+     * Método estático que garante que só existe um único objeto DataBase
+     */
 	public static DataBase getInstance() {
 		return databaseSingleton;
 	}
 	
+	/**
+	 * Calcula o histograma média dos usuários
+	 * @return O histograma média dos usuários
+	 */
 	public int[] getHistMed() {
 		int histmedio[]=new int[24];
 		int aux[]=new int[24];
@@ -34,6 +54,10 @@ public class DataBase {
 		return histmedio;
 	}
 	
+	/**
+	 * Adiciona usuários na base de dados
+	 * @param employee Usuário a ser adicionado na base de dados
+	 */
 	public void addUsers(User employee) {
 		Node aux;
 		boolean existe= false;
@@ -51,6 +75,10 @@ public class DataBase {
 		}
 	}
 	
+	/**
+	 * Imprime a árvore de usuário
+	 * @param id Usuário cujas informações deseja-se ver
+	 */
 	public void userInfo(String id) {
 		boolean existe = false;
 		for(int i = 0; i < users.size(); i++) {
@@ -96,16 +124,29 @@ public class DataBase {
 		}
 	}
 	
+	/**
+	 * Permite visualizar o histograma de um usuário
+	 * @param user Usuário o qual deseja-se ver o histograma
+	 */
 	public void seeHist(String user) {
+		boolean valido = false;
 		for(Tree usuario: users) {
 			AbstractSuper aux = usuario.getRoot().getValue();
 			User u = (User) aux;
 			if(u.getId().equals(user)) {
 				usuario.getRoot().printHist();
+				valido = true;
 			}
+		}
+		if(valido == false) {
+			System.out.println("ID inexistente ou inválido");
 		}
 	}
 	
+	/**
+	 * Método para ler o arquivo contendo os usuários sem valores duplicados
+	 * @param nomearquivo Nome do arquivo contendo a lista de usuários
+	 */
 	public void lerUser(String nomearquivo) {
 		Scanner leitor;
 		Reader arquivo = new Reader();
@@ -129,6 +170,10 @@ public class DataBase {
 		}
 	}
 	
+	/**
+	 * Método para ler o arquivo de atividades do usuários
+	 * @param nomearquivo Nome do arquivo contendo as atividades
+	 */
 	public void ler(String nomearquivo) {
 		Scanner leitor;
 		Reader arquivo = new Reader();
@@ -168,6 +213,10 @@ public class DataBase {
 		}
 	}
 	
+	/**
+	 * Verifica os usuários de mesma função que têm comportamento suspeito
+	 * @param funcao
+	 */
 	public void anomalie(String funcao) {
 		double dfinal[]  = new double[users.size()];
 		int aux2=0;

@@ -36,6 +36,7 @@ public class Main {
 			System.out.println("MENU");
 			System.out.println("1 - Buscar Usuário");
 			System.out.println("2 - Buscar ameaça por cargo");
+			System.out.println("3 - Ver histograma de um usuário");
 			System.out.print("Insira o valor de uma operação: ");
 			option = leitor.nextInt(); 
 			leitor.nextLine();
@@ -48,13 +49,19 @@ public class Main {
 					db.userInfo(input);
 					break;
 				case 2:
-					System.out.println("----- BUSCA POR AMEAÇA POR CARGO");
+					System.out.println("----- BUSCA POR AMEAÇA POR CARGO -----");
 					System.out.println("Insira um cargo na empresa: ");
 					input = leitor.nextLine();
 					System.out.println("Processando os dados");
 					System.out.println("Resultado: ");
 					db.anomalie(input);
 					break;
+				case 3:
+					System.out.println("----- BUSCA POR AMEAÇA POR CARGO -----");
+					System.out.println("Insira o ID de um usuario: ");
+					input = leitor.nextLine();
+					System.out.println("Resultado: ");
+					db.userInfo(input);
 			}
 		}
 		leitor.close();
