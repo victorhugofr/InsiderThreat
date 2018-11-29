@@ -8,44 +8,49 @@ import java.util.Arrays;
 import br.ufrn.imd.lp2.io.*;
 
 /**
- * Classe que armazena todos os dados dos usu·rios, armazenando uma lista
- * de ·rvores de usu·rios
+ * Classe que armazena todos os dados dos usu√°rios, armazenando uma lista
+ * de √°rvores de usu√°rios
  * @author Gabriel Igor and Victor Hugo
  * @version 2018.29.11
  */
 
 public class DataBase {
-	// Lista de ·rvores de usu·rios
+	// Lista de √°rvores de usu√°rios
 	public ArrayList<Tree>users;
 
 	// DataBase Singleton
 	public static final DataBase databaseSingleton = new DataBase();
 	
     /**
-     * Cria um objeto DataBase ˙nico, j· que o projeto foi implementado
-     * usando-se o padr„o de projeto Singleton
+     * Cria um objeto DataBase √∫nico, j√° que o projeto foi implementado
+     * usando-se o padr√£o de projeto Singleton
      */
 	private DataBase() {
 		users = new ArrayList<Tree>();
 	}
 	
     /**
-     * MÈtodo est·tico que garante que sÛ existe um ˙nico objeto DataBase
+     * M√©todo est√°tico que garante que s√≥ existe um √∫nico objeto DataBase
      */
 	public static DataBase getInstance() {
 		return databaseSingleton;
 	}
 	
 	/**
-	 * Calcula o histograma mÈdia dos usu·rios
-	 * @return O histograma mÈdia dos usu·rios
+	 * Calcula o histograma m√©dia dos usu√°rios daquela funcao
+	 * @param funcao Funcao dos usuarios a serem analisados
+	 * @return O histograma m√©dia dos usu√°rios
 	 */
-	public int[] getHistMed() {
+	public int[] getHistMed(String funcao) {
 		int histmedio[]=new int[24];
 		int aux[]=new int[24];
 		for(int i=0;i<users.size();i++) {
+			AbstractSuper aux2 = users.get(i).getRoot().getValue();
+			User member = (User) aux2;
+			if(member.getRole().equals(funcao)) {
 			for(int j=0;j<24;j++) {
 				aux[j]+=users.get(i).getRoot().getHist()[j];
+			}
 			}
 		}
 		for (int i=0;i<24;i++) {
@@ -55,8 +60,8 @@ public class DataBase {
 	}
 	
 	/**
-	 * Adiciona usu·rios na base de dados
-	 * @param employee Usu·rio a ser adicionado na base de dados
+	 * Adiciona usu√°rios na base de dados
+	 * @param employee Usu√°rio a ser adicionado na base de dados
 	 */
 	public void addUsers(User employee) {
 		Node aux;
@@ -76,8 +81,8 @@ public class DataBase {
 	}
 	
 	/**
-	 * Imprime a ·rvore de usu·rio
-	 * @param id Usu·rio cujas informaÁıes deseja-se ver
+	 * Imprime a √°rvore de usu√°rio
+	 * @param id Usu√°rio cujas informa√ß√µes deseja-se ver
 	 */
 	public void userInfo(String id) {
 		boolean existe = false;
@@ -125,8 +130,8 @@ public class DataBase {
 	}
 	
 	/**
-	 * Permite visualizar o histograma de um usu·rio
-	 * @param user Usu·rio o qual deseja-se ver o histograma
+	 * Permite visualizar o histograma de um usu√°rio
+	 * @param user Usu√°rio o qual deseja-se ver o histograma
 	 */
 	public void seeHist(String user) {
 		boolean valido = false;
@@ -139,13 +144,13 @@ public class DataBase {
 			}
 		}
 		if(valido == false) {
-			System.out.println("ID inexistente ou inv·lido");
+			System.out.println("ID inexistente ou inv√°lido");
 		}
 	}
 	
 	/**
-	 * MÈtodo para ler o arquivo contendo os usu·rios sem valores duplicados
-	 * @param nomearquivo Nome do arquivo contendo a lista de usu·rios
+	 * M√©todo para ler o arquivo contendo os usu√°rios sem valores duplicados
+	 * @param nomearquivo Nome do arquivo contendo a lista de usu√°rios
 	 */
 	public void lerUser(String nomearquivo) {
 		Scanner leitor;
@@ -171,7 +176,7 @@ public class DataBase {
 	}
 	
 	/**
-	 * MÈtodo para ler o arquivo de atividades do usu·rios
+	 * M√©todo para ler o arquivo de atividades do usu√°rios
 	 * @param nomearquivo Nome do arquivo contendo as atividades
 	 */
 	public void ler(String nomearquivo) {
@@ -214,12 +219,14 @@ public class DataBase {
 	}
 	
 	/**
-	 * Verifica os usu·rios de mesma funÁ„o que tÍm comportamento suspeito
-	 * @param funcao
+	 * Verifica os usu√°rios de mesma fun√ß√£o que t√™m comportamento suspeito
+	 * @param funcao Funcao dos usuarios a serem analisados
 	 */
 	public void anomalie(String funcao) {
 		double dfinal[]  = new double[users.size()];
 		int aux2=0;
+		int[] histMedFinal=new int[24];
+		histMedFinal=getHistMed(funcao);
 		for(int k = 0; k < users.size(); k++) {
 			AbstractSuper aux = users.get(k).getRoot().getValue();
 			User member = (User) aux;
@@ -227,7 +234,7 @@ public class DataBase {
 				aux2++;
 				for(int i=0;i<24;i++) {
 					// Somatorio
-					dfinal[k]+=Math.pow(users.get(k).getRoot().getHist()[i]-getHistMed()[i], 2);
+					dfinal[k]+=Math.pow(users.get(k).getRoot().getHist()[i]-histMedFinal[i], 2);
 				}
 					
 				// Raiz do somatorio
@@ -235,7 +242,7 @@ public class DataBase {
 			}
 		}
 		if(aux2 == 0) {
-			System.out.println("Cargo n„o existente ou inv·lido");
+			System.out.println("Cargo nÔøΩo existente ou invÔøΩlido");
 		} else {
 			double normal[]=new double[aux2];
 			aux2=0;
@@ -275,4 +282,5 @@ public class DataBase {
 		}
 				
 	}
+}
 }
