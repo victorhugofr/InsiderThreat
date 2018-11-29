@@ -134,10 +134,12 @@ public class DataBase {
 	}
 	
 	public void userInfo(String id) {
+		boolean existe = false;
 		for(int i = 0; i < users.size(); i++) {
 			AbstractSuper aux = users.get(i).getRoot().getValue();
 				User member = (User) aux;
 				if(member.getId().equals(id)) {
+					existe = true;
 					member.show();
 					ArrayList<Node> dates = users.get(i).getRoot().getChilds();
 					for(Node date: dates) {
@@ -171,6 +173,9 @@ public class DataBase {
 						}
 					}
 				}
+		}
+		if(existe == false) {
+			System.out.println("ID invalido");
 		}
 	}
 	
@@ -223,24 +228,26 @@ public class DataBase {
 				//arquivo.setValoresEntreVirgulas(linha);
 				teste = linha.split(",");
 				//teste= arquivo.quebrandoLinhas();
-				
-				if(nomearquivo.equals("src/br/ufrn/imd/lp2/files/device.csv"))
+				//System.out.println(teste[1]);
+				if(nomearquivo.equals("src/br/ufrn/imd/lp2/files/Device.csv"))
 					de=new DeviceLE(teste[0],teste[1],teste[2],teste[3],teste[4]);
 				else if(nomearquivo.equals("src/br/ufrn/imd/lp2/files/logon-completo.csv"))
 					de=new LogonLE(teste[0],teste[1],teste[2],teste[3],teste[4]);
 				else if(nomearquivo.equals("src/br/ufrn/imd/lp2/files/http-completo.csv"))
 					de=new HttpLE(teste[0],teste[1],teste[2],teste[3],teste[4]);
 				
-				//SystemDate date = new SystemDate(de.getDate());
+				//System.out.println(de.getDate());
+				SystemDate date = new SystemDate(de.getDate());
 				
 				for(int i = 0; i < users.size(); i++) {
 					AbstractSuper aux = users.get(i).getRoot().getValue();
 					User member = (User) aux;
 					if(member.getId().equals(de.getUser())) {
 						//System.out.println("Encontrou");
-						SystemDate date = new SystemDate(de.getDate());
+						//SystemDate date = new SystemDate(de.getDate());
 						users.get(i).getRoot().atualizaHist(date.getHour());
 						users.get(i).addLE(de, date.getHour());
+						break;
 					}
 				}
 			}

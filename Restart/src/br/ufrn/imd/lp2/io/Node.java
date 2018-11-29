@@ -35,8 +35,8 @@ public class Node {
 		return value;
 	}
 	
-	public void setValue(AbstractSuper value) {
-		this.value = value;
+	public void setValue(AbstractSuper valor) {
+		this.value = valor;
 	}
 	
 	public ArrayList<Node> getChilds() {

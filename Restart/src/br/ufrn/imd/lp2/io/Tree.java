@@ -35,11 +35,13 @@ public class Tree {
 	
 	public void addLE(LogEntry le, String hist) {
 		// Para a Data
+		
 		String ts= le.getDate();
 		Node dataNode = getDateChild(ts);
 		//AbstractSuper dataAs = dataNode.getValue();
 		//SystemDate dataFinal = (SystemDate) dataAs;
 		dataNode.atualizaHist(hist);
+		 
 		// Para o PC
 		String pcId= le.getPc();
 		Node pcNode = getPcChild(dataNode, pcId);
@@ -81,14 +83,14 @@ public class Tree {
 	
 	public Node getDateChild(String ts) {
 		Node result = null;
-		
         int i = 0;
         Node userNode = getRoot();
         ArrayList<Node> children = userNode.getChilds();
         for(Node current: children ) {
         	SystemDate date = (SystemDate) current.getValue();
-        	if(date.getDay().equals(ts)) {
+        	if(date.getDay().equals(ts.substring(0, 10))) {
         		result = current;
+        		break;
         	}
         		
         }
@@ -109,6 +111,7 @@ public class Tree {
         	PC pc = (PC) current.getValue();
         	if(pc.getPcId().equals(ts)) {
         		result = current;
+        		break;
         	}
         }
         if(result == null) {
@@ -123,10 +126,12 @@ public class Tree {
 	public Node getActionChild(Node pcNode, String ts) {
 		Node result = null;
         ArrayList<Node> children = pcNode.getChilds();
+
         for(Node current: children ) {
         	Action act = (Action) current.getValue();
         	if(act.getId().equals(ts)) {
         		result = current;
+        		break;
         	}
         }
         if(result == null) {
@@ -145,6 +150,7 @@ public class Tree {
         	Device device = (Device) current.getValue();
         	if(device.getActivity().equals(ts)) {
         		result = current;
+        		break;
         	}
         }
         if(result == null) {
@@ -163,6 +169,7 @@ public class Tree {
         	Logon login = (Logon) current.getValue();
         	if(login.getActivity().equals(ts)) {
         		result = current;
+        		break;
         	}
         }
         if(result == null) {
@@ -181,6 +188,7 @@ public class Tree {
         	HTTP site = (HTTP) current.getValue();
         	if(site.getActivity().equals(ts)) {
         		result = current;
+        		break;
         	}
         }
         if(result == null) {
