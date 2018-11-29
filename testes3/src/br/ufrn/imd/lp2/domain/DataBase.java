@@ -41,7 +41,7 @@ public class DataBase {
 	
 	public void addUsers(User employee) {
 			Node aux;
-			// VERIFICA SE JA EXISTE UMA ¡RVORE COM AQUELE USER
+			// VERIFICA SE JA EXISTE UMA √ÅRVORE COM AQUELE USER
 			boolean existe= false;
 			for(int i=0;i<users.size();i++) {
 				aux=users.get(i).getUserChild(users.get(i).getRoot(), employee.getId()); 
@@ -134,10 +134,12 @@ public class DataBase {
 	}
 	
 	public void userInfo(String id) {
+		boolean existe = false;
 		for(int i = 0; i < users.size(); i++) {
 			AbstractSuper aux = users.get(i).getRoot().getValue();
 				User member = (User) aux;
 				if(member.getId().equals(id)) {
+					existe = true;
 					member.show();
 					ArrayList<Node> dates = users.get(i).getRoot().getChilds();
 					for(Node date: dates) {
@@ -151,15 +153,39 @@ public class DataBase {
 							for(Node act: acts) {
 								Action action = (Action) act.getValue();
 								action.show();
-								ArrayList<Node> devices = act.getChilds();
-								for(Node device: devices) {
-									Device dvc = (Device) device.getValue();
-									dvc.show();
+								ArrayList<Node> activities = act.getChilds();
+								for(Node end: activities) {
+									if(end.getValue() instanceof Device) {
+										Device dvc = (Device) end.getValue();
+										dvc.show();
+									}
+									
+									if(end.getValue() instanceof HTTP) {
+										HTTP site = (HTTP) end.getValue();
+										site.show();
+									}
+									if(end.getValue() instanceof Logon) {
+										Logon site = (Logon) end.getValue();
+										site.show();
+									}
 								}
 							}
 						}
 					}
 				}
+		}
+		if(existe == false) {
+			System.out.println("ID invalido");
+		}
+	}
+	
+	public void seeHist(String user) {
+		for(Tree usuario: users) {
+			AbstractSuper aux = usuario.getRoot().getValue();
+			User u = (User) aux;
+			if(u.getId().equals(user)) {
+				usuario.getRoot().printHist();
+			}
 		}
 	}
 	
@@ -199,29 +225,88 @@ public class DataBase {
 			
 			while(leitor.hasNext()){
 				linha = leitor.nextLine();
-				arquivo.setValoresEntreVirgulas(linha);
-				teste= arquivo.quebrandoLinhas();
-				
-				if(nomearquivo.equals("src/br/ufrn/imd/lp2/files/device.csv"))
+				//arquivo.setValoresEntreVirgulas(linha);
+				teste = linha.split(",");
+				//teste= arquivo.quebrandoLinhas();
+				//System.out.println(teste[1]);
+				if(nomearquivo.equals("C:/Users/vale1c/workspace/src/br/ufrn/imd/lp2/files/device.csv"))
 					de=new DeviceLE(teste[0],teste[1],teste[2],teste[3],teste[4]);
-				else if(nomearquivo.equals("logon-complet.csv"))
+				else if(nomearquivo.equals("C:/Users/vale1c/workspace/src/br/ufrn/imd/lp2/files/logon.csv"))
 					de=new LogonLE(teste[0],teste[1],teste[2],teste[3],teste[4]);
-				else if(nomearquivo.equals("http-completo.csv"))
+				else if(nomearquivo.equals("C:/Users/vale1c/workspace/src/br/ufrn/imd/lp2/files/http.csv"))
 					de=new HttpLE(teste[0],teste[1],teste[2],teste[3],teste[4]);
+				
+				//System.out.println(de.getDate());
+				SystemDate date = new SystemDate(de.getDate());
 				
 				for(int i = 0; i < users.size(); i++) {
 					AbstractSuper aux = users.get(i).getRoot().getValue();
 					User member = (User) aux;
-					SystemDate date = new SystemDate(de.getDate());
 					if(member.getId().equals(de.getUser())) {
 						//System.out.println("Encontrou");
+						//SystemDate date = new SystemDate(de.getDate());
 						users.get(i).getRoot().atualizaHist(date.getHour());
-						users.get(i).addLE(de);
+						users.get(i).addLE(de, date.getHour());
+						break;
 					}
 				}
 			}
 		}catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void anomalie(String funcao) {
+		double dfinal[]  = new double[users.size()];
+		double media=0;
+		double dp=0;
+		int aux2=0;
+		for(int k = 0; k < users.size(); k++) {
+			AbstractSuper aux = users.get(k).getRoot().getValue();
+			User member = (User) aux;
+			if(member.getRole().equals(funcao)) {
+				aux2++;
+				//dfinal = new double[users.size()];
+				//for(int j=0;j<users.size();j++) {
+					for(int i=0;i<24;i++) {
+						// Somatorio
+						dfinal[k]+=Math.pow(users.get(k).getRoot().getHist()[i]-getHistMed()[i], 2);
+					}
+					
+					// Raiz do somatorio
+					dfinal[k]=Math.sqrt(dfinal[k]);
+				//}
+				//System.out.println(Math.abs(dfinal[k]));
+			}
+		}
+		double normal[]=new double[aux2];
+		aux2=0;
+		for(int i=0;i<users.size();i++) {
+			if(dfinal[i]!=0){
+				normal[aux2]=dfinal[i];
+				aux2++;
+			}
+		}
+		for(int i=0;i<aux2;i++) {
+			media+=normal[i];
+		}
+			
+		media=media/aux2;
+			
+		for(int i=0;i<aux2;i++) {
+			dp+=Math.pow(normal[i]-media,2);
+		}
+			
+		dp=Math.sqrt(dp/aux2);
+			
+		//normal = new double[users.size()];
+		
+		
+		for(int i=0;i<aux2;i++) {
+			//	System.out.println(dfinal[i]);
+			//normal[i]=(dfinal[i]-media)/dp;
+			System.out.println(Math.abs(normal[i]));
+		}
+		
 	}
 }
