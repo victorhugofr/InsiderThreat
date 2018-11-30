@@ -12,7 +12,7 @@ public class Main {
 
 	public static void main(String[] args) {
 	
-		System.out.println("AGUARDE A LEITURA DOS ARQUIVOS /n");
+		System.out.println("AGUARDE A LEITURA DOS ARQUIVOS \n");
 		DataBase db = DataBase.databaseSingleton;
 		
 		System.out.println("----  Lendo Usuários  ----");

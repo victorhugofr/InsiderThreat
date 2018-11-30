@@ -46,8 +46,7 @@ public class DataBase {
 		int histmedio[]=new int[24];
 		int aux[]=new int[24];
 		for(int i=0;i<users.size();i++) {
-			AbstractSuper aux2 = users.get(i).getRoot().getValue();
-			User member = (User) aux2;
+			User member = (User) users.get(i).getRoot().getValue();
 			if(member.getRole().equals(funcao)) {
 			for(int j=0;j<24;j++) {
 				aux[j]+=users.get(i).getRoot().getHist()[j];
@@ -88,8 +87,7 @@ public class DataBase {
 	public void userInfo(String id) {
 		boolean existe = false;
 		for(int i = 0; i < users.size(); i++) {
-			AbstractSuper aux = users.get(i).getRoot().getValue();
-			User member = (User) aux;
+			User member = (User) users.get(i).getRoot().getValue();
 			if(member.getId().equals(id)) {
 				existe = true;
 				member.show();
@@ -137,8 +135,8 @@ public class DataBase {
 	public void seeHist(String user) {
 		boolean valido = false;
 		for(Tree usuario: users) {
-			AbstractSuper aux = usuario.getRoot().getValue();
-			User u = (User) aux;
+			//AbstractSuper aux = usuario.getRoot().getValue();
+			User u = (User) usuario.getRoot().getValue();
 			if(u.getId().equals(user)) {
 				usuario.getRoot().printHist();
 				valido = true;
@@ -204,8 +202,7 @@ public class DataBase {
 				SystemDate date = new SystemDate(de.getDate());
 				
 				for(int i = 0; i < users.size(); i++) {
-					AbstractSuper aux = users.get(i).getRoot().getValue();
-					User member = (User) aux;
+					User member = (User) users.get(i).getRoot().getValue();
 					if(member.getId().equals(de.getUser())) {
 						users.get(i).getRoot().atualizaHist(date.getHour());
 						users.get(i).addLE(de, date.getHour());
@@ -229,8 +226,7 @@ public class DataBase {
 		int[] histMedFinal=new int[24];
 		histMedFinal=getHistMed(funcao);
 		for(int k = 0; k < users.size(); k++) {
-			AbstractSuper aux = users.get(k).getRoot().getValue();
-			User member = (User) aux;
+			User member = (User)  users.get(k).getRoot().getValue();
 			if(member.getRole().equals(funcao)) {
 				aux2++;
 				for(int i=0;i<24;i++) {

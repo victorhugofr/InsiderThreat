@@ -24,15 +24,6 @@ public class Node {
     }
     
     /**
-     * Construtor padrao
-     */
-    public Node() {
-    	this.value = new AbstractSuper();
-    	setHist(new int[24]);
-    	setChilds(new ArrayList<Node>());
-    }
-    
-    /**
 	 * Atualiza o histograma do nó, somando 1
 	 * @param ts Hora da ação realizada
 	 */

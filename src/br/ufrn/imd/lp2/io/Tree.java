@@ -43,10 +43,10 @@ public class Tree {
 	 */
 	public Node getUserChild(Node currentNode, String dataToFind) {
 		 Node returnNode = null;
-		 AbstractSuper aux = currentNode.getValue();
+		 //AbstractSuper aux = currentNode.getValue();
 	        
-		 if(aux instanceof User) {
-			 User member = (User) aux;
+		 if(currentNode.getValue() instanceof User) {
+			 User member = (User) currentNode.getValue();
 			 if (member.getId().equals(dataToFind)) {
 				 returnNode = currentNode;
 			 }
@@ -120,8 +120,7 @@ public class Tree {
         		
         }
         if(result == null) {
-        	result = new Node();
-        	result.setValue(new SystemDate(ts));
+        	result = new Node(new SystemDate(ts));
         	children.add(result);
         }
         
@@ -147,8 +146,7 @@ public class Tree {
         	}
         }
         if(result == null) {
-        	result = new Node();
-        	result.setValue(new PC(ts));
+        	result = new Node(new PC(ts));
         	children.add(result);
         }
         
@@ -175,8 +173,7 @@ public class Tree {
         	}
         }
         if(result == null) {
-        	result = new Node();
-        	result.setValue(new Action(ts));
+        	result = new Node(new Action(ts));
         	children.add(result);
         }
         
@@ -202,8 +199,7 @@ public class Tree {
         	}
         }
         if(result == null) {
-        	result = new Node();
-        	result.setValue(new Device(ts));
+        	result = new Node(new Device(ts));
         	children.add(result);
         }
         
@@ -229,8 +225,7 @@ public class Tree {
         	}
         }
         if(result == null) {
-        	result = new Node();
-        	result.setValue(new Logon(ts));
+        	result = new Node(new Logon(ts));
         	children.add(result);
         }
         
@@ -256,8 +251,7 @@ public class Tree {
         	}
         }
         if(result == null) {
-        	result = new Node();
-        	result.setValue(new HTTP(ts));
+        	result = new Node(new HTTP(ts));
         	children.add(result);
         }
         
